@@ -55,7 +55,7 @@ extension ViewController {
             }
         }
         
-        let picker = EmailPickerViewController.emailPickerModal("To share your fun test results with some loved ones, please type their emails or select their names from the list. Enjoy!", completion: handler)
+        let picker = EmailPickerViewController.emailPickerModal("To share your fun results with some friends, please type their emails or select their names from the list. Enjoy!", completion: handler)
         
         presentViewController(picker, animated: true, completion: nil)
     }
