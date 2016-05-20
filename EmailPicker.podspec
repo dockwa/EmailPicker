@@ -9,34 +9,35 @@
 Pod::Spec.new do |s|
   s.name             = "EmailPicker"
   s.version          = "0.1.0"
-  s.summary          = "A short description of EmailPicker."
-
-# This description is used to generate tags and improve search results.
-#   * Think: What does it do? Why did you write it? What is the focus?
-#   * Try to keep it short, snappy and to the point.
-#   * Write the description between the DESC delimiters below.
-#   * Finally, don't worry about the indent, CocoaPods strips it!
+  s.summary          = "A viewcontroller to select emails, written in Swift."
 
   s.description      = <<-DESC
-TODO: Add long description of the pod here.
-                       DESC
 
-  s.homepage         = "https://github.com/<GITHUB_USERNAME>/EmailPicker"
+    A viewcontroller that enables users to select emails from a list of their contacts, or type them in manually. 100% Swift.
+
+    DESC
+
+  s.homepage         = "https://github.com/dockwa/EmailPicker"
   # s.screenshots     = "www.example.com/screenshots_1", "www.example.com/screenshots_2"
   s.license          = 'MIT'
   s.author           = { "Christian Hatch" => "christianhatch@gmail.com" }
-  s.source           = { :git => "https://github.com/<GITHUB_USERNAME>/EmailPicker.git", :tag => s.version.to_s }
-  # s.social_media_url = 'https://twitter.com/<TWITTER_USERNAME>'
+  s.source           = { :git => "https://github.com/dockwa/EmailPicker.git", :tag => s.version.to_s }
+  s.social_media_url = 'https://twitter.com/commodoreftp'
 
   s.ios.deployment_target = '8.0'
 
   s.source_files = 'EmailPicker/Classes/**/*'
-  
-  # s.resource_bundles = {
-  #   'EmailPicker' => ['EmailPicker/Assets/*.png']
-  # }
+
+  s.resource_bundles = {
+    'EmailPicker' => [
+        'Pod/**/*.xib'
+    ]
+  }
+
 
   # s.public_header_files = 'Pod/Classes/**/*.h'
-  # s.frameworks = 'UIKit', 'MapKit'
-  # s.dependency 'AFNetworking', '~> 2.3'
+  s.dependency 'CLTokenInputView'
+  s.dependency 'APAddressBook'
+
+
 end

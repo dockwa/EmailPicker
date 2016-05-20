@@ -1,0 +1,6 @@
+framework module EmailPicker {
+  umbrella header "EmailPicker-umbrella.h"
+
+  export *
+  module * { export * }
+}

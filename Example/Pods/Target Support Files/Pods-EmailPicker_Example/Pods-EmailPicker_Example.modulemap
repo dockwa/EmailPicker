@@ -1,0 +1,6 @@
+framework module Pods_EmailPicker_Example {
+  umbrella header "Pods-EmailPicker_Example-umbrella.h"
+
+  export *
+  module * { export * }
+}

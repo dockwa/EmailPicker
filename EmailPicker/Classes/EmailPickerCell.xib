@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="10117" systemVersion="15E65" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <tableViewCell contentMode="scaleToFill" restorationIdentifier="EmailPickerCell" selectionStyle="default" indentationWidth="10" reuseIdentifier="EmailPickerCell" rowHeight="60" id="zfK-IE-b3o" customClass="EmailPickerCell" customModule="EmailPicker">
+            <rect key="frame" x="0.0" y="0.0" width="320" height="60"/>
+            <autoresizingMask key="autoresizingMask"/>
+            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="zfK-IE-b3o" id="VFg-aV-jt8">
+                <rect key="frame" x="0.0" y="0.0" width="320" height="59.5"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="2l4-Le-aUC">
+                        <rect key="frame" x="10" y="10" width="40" height="40"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="40" id="fOv-oe-eXI"/>
+                            <constraint firstAttribute="width" constant="40" id="uQX-P8-hZ9"/>
+                        </constraints>
+                    </imageView>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gD9-Mf-zPr">
+                        <rect key="frame" x="60" y="19" width="42" height="21"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="21" id="MYd-ko-sdK"/>
+                        </constraints>
+                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                        <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                </subviews>
+                <constraints>
+                    <constraint firstItem="2l4-Le-aUC" firstAttribute="leading" secondItem="VFg-aV-jt8" secondAttribute="leading" constant="10" id="5T0-YH-rEJ"/>
+                    <constraint firstAttribute="centerY" secondItem="gD9-Mf-zPr" secondAttribute="centerY" id="6iP-ga-soU"/>
+                    <constraint firstItem="gD9-Mf-zPr" firstAttribute="leading" secondItem="2l4-Le-aUC" secondAttribute="trailing" constant="10" id="OkX-yo-PKL"/>
+                    <constraint firstAttribute="centerY" secondItem="2l4-Le-aUC" secondAttribute="centerY" id="kYu-CZ-LyK"/>
+                </constraints>
+            </tableViewCellContentView>
+            <connections>
+                <outlet property="label" destination="gD9-Mf-zPr" id="ngb-I7-eqr"/>
+                <outlet property="thumbnailImageView" destination="2l4-Le-aUC" id="1xo-uu-pIc"/>
+            </connections>
+            <point key="canvasLocation" x="679" y="433"/>
+        </tableViewCell>
+    </objects>
+</document>
