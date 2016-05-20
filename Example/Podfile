@@ -1,0 +1,11 @@
+use_frameworks!
+
+target 'EmailPicker_Example' do
+  pod 'EmailPicker', :path => '../'
+
+  target 'EmailPicker_Tests' do
+    inherit! :search_paths
+
+    
+  end
+end
