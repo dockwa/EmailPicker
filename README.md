@@ -1,6 +1,5 @@
 # EmailPicker
 
-[![CI Status](http://img.shields.io/travis/Christian Hatch/EmailPicker.svg?style=flat)](https://travis-ci.org/Christian Hatch/EmailPicker)
 [![Version](https://img.shields.io/cocoapods/v/EmailPicker.svg?style=flat)](http://cocoapods.org/pods/EmailPicker)
 [![License](https://img.shields.io/cocoapods/l/EmailPicker.svg?style=flat)](http://cocoapods.org/pods/EmailPicker)
 [![Platform](https://img.shields.io/cocoapods/p/EmailPicker.svg?style=flat)](http://cocoapods.org/pods/EmailPicker)
@@ -17,7 +16,7 @@ EmailPicker is available through [CocoaPods](http://cocoapods.org). To install
 it, simply add the following line to your Podfile:
 
 ```ruby
-pod "EmailPicker"
+pod 'EmailPicker'
 ```
 
 ## Author
