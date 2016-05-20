@@ -17,11 +17,6 @@
     "ios": "8.0"
   },
   "source_files": "EmailPicker/Classes/**/*",
-  "resource_bundles": {
-    "EmailPicker": [
-      "Pod/**/*.xib"
-    ]
-  },
   "dependencies": {
     "CLTokenInputView": [
 

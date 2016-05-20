@@ -28,11 +28,7 @@ Pod::Spec.new do |s|
 
   s.source_files = 'EmailPicker/Classes/**/*'
 
-  s.resource_bundles = {
-    'EmailPicker' => [
-        'Pod/**/*.xib'
-    ]
-  }
+ #s.resources = { 'EmailPicker' => ['Pod/**/*.xib'] }
 
 
   # s.public_header_files = 'Pod/Classes/**/*.h'
