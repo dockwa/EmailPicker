@@ -10,13 +10,22 @@ import UIKit
 import CLTokenInputView
 import APAddressBook
 
+
+///A typealias for an email.
 public typealias Email = String
 
+/**
+ An enum representing the result of the EmailPicker
+ 
+ - Selected:  Some contacts were selected. Has an array of the emails that were selected, and the EmailPickerViewController to dismiss it.
+ - Cancelled: The EmailPicker was cancelled, so no contacts were selected. Has the EmailPickerViewController to dismiss it.
+ */
 public enum EmailPickerResult {
     case Selected(EmailPickerViewController, [Email])
     case Cancelled(EmailPickerViewController)
 }
 
+/// The completion closure for EmailPicker
 public typealias EmailPickerCompletion = (EmailPickerResult) -> Void
 
 public class EmailPickerViewController: UIViewController {
@@ -92,6 +101,14 @@ public class EmailPickerViewController: UIViewController {
     }
     
     
+    /**
+     This is the prefered method to create a new EmailPicker. Use this method and present modally.
+     
+     - parameter infoText:   This is the text that will appear at the top of the EmailPicker. Use this to provide additional instructions or context for your users.
+     - parameter completion: The completion closure to handle the selected emails.
+     
+     - returns: Returns an EmailPicker wrapped in a UINavigationController.
+     */
     public class func emailPickerModal(infoText: String? = nil, completion: EmailPickerCompletion) -> UINavigationController {
         let picker = EmailPickerViewController(infoText: infoText, completion: completion)
         let nav = UINavigationController(rootViewController: picker)

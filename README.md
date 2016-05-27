@@ -4,11 +4,21 @@
 [![License](https://img.shields.io/cocoapods/l/EmailPicker.svg?style=flat)](http://cocoapods.org/pods/EmailPicker)
 [![Platform](https://img.shields.io/cocoapods/p/EmailPicker.svg?style=flat)](http://cocoapods.org/pods/EmailPicker)
 
+
 ## Example
+[![Platform](https://github.com/dockwa/EmailPicker/blob/master/Sample.gif)](http://cocoapods.org/pods/EmailPicker)
 
 To run the example project, clone the repo, and run `pod install` from the Example directory first.
 
+## Usage
+Create a new instance using the class method 
+``` 
+emailPickerModal(infoText: String?, completion: EmailPickerCompletion)
+```
+which returns a new EmailPicker instance wrapped in a UINavigationController to present modally. 
+
 ## Requirements
+This is a Swift project and uses Swift specific features such as associated values on enums, so you cannot use this pod in an Objective-C project.
 
 ## Installation
 
