@@ -6,7 +6,7 @@
 
 
 ## Example
-[![Platform](https://github.com/dockwa/EmailPicker/blob/master/Sample.gif)](http://cocoapods.org/pods/EmailPicker)
+![Sample](https://github.com/dockwa/EmailPicker/blob/master/sample.gif)
 
 To run the example project, clone the repo, and run `pod install` from the Example directory first.
 
