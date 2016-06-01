@@ -1,5 +1,5 @@
 # EmailPicker
-![Powered by Dockwa](https://raw.githubusercontent.com/dockwa/openpixel/dockwa/by-dockwa.png)
+[![Powered by Dockwa](https://raw.githubusercontent.com/dockwa/openpixel/dockwa/by-dockwa.png)](https://engineering.dockwa.com/)
 
 [![Version](https://img.shields.io/cocoapods/v/EmailPicker.svg?style=flat)](http://cocoapods.org/pods/EmailPicker)
 [![License](https://img.shields.io/cocoapods/l/EmailPicker.svg?style=flat)](http://cocoapods.org/pods/EmailPicker)
