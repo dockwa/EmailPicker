@@ -6,7 +6,7 @@
 
 
 ## Example
-![Sample](https://github.com/dockwa/EmailPicker/blob/master/sample.gif)
+![Sample](https://github.com/dockwa/EmailPicker/blob/master/Sample.gif)
 
 To run the example project, clone the repo, and run `pod install` from the Example directory first.
 
