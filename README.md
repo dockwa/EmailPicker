@@ -14,7 +14,7 @@ To run the example project, clone the repo, and run `pod install` from the Examp
 ## Usage
 Create a new instance using the class method 
 ```swift
-emailPickerModal(infoText: String?, completion: EmailPickerCompletion)
+class func emailPickerModal(infoText: String? = nil, completion: EmailPickerCompletion) -> UINavigationController
 ```
 which returns a new EmailPicker instance wrapped in a UINavigationController to present modally. 
 
