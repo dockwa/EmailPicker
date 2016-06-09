@@ -21,24 +21,24 @@ which returns a new EmailPicker instance wrapped in a UINavigationController to 
 Check out the example project for a usage example, like this: 
 
 ```swift
-        let handler: EmailPickerCompletion = {(result) in
-            switch result {
-            case .Cancelled(let vc):
-                vc.dismissViewControllerAnimated(true) {
-                    self.contactsLabel.text = "Cancelled!"
-                }
-                break
-            case .Selected(let vc, let emails):
-                vc.dismissViewControllerAnimated(true) {
-                    self.contactsLabel.text = "Selected Emails: \(emails)"
-                }
-                break
-            }
+let handler: EmailPickerCompletion = {(result) in
+    switch result {
+    case .Cancelled(let vc):
+        vc.dismissViewControllerAnimated(true) {
+            self.contactsLabel.text = "Cancelled!"
         }
+        break
+    case .Selected(let vc, let emails):
+        vc.dismissViewControllerAnimated(true) {
+            self.contactsLabel.text = "Selected Emails: \(emails)"
+        }
+        break
+    }
+}
+
+let picker = EmailPickerViewController.emailPickerModal("To share your fun results with some friends, please type their emails or select their names from the list. Enjoy!", completion: handler)
         
-        let picker = EmailPickerViewController.emailPickerModal("To share your fun results with some friends, please type their emails or select their names from the list. Enjoy!", completion: handler)
-        
-        presentViewController(picker, animated: true, completion: nil)
+presentViewController(picker, animated: true, completion: nil)
 ```
 
 ## Requirements
