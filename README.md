@@ -55,7 +55,7 @@ pod 'EmailPicker'
 
 ## Author
 
-Christian Hatch, @commodoreftp
+Christian Hatch, [@commodoreftp](https://twitter.com/Commodoreftp)
 
 ## License
 
