@@ -9,7 +9,7 @@
 ## Example
 ![Sample](https://github.com/dockwa/EmailPicker/blob/master/Sample.gif)
 
-To run the example project, clone the repo, and run `pod install` from the Example directory first.
+To test out EmailPicker, just run `pod try EmailPicker` from your terminal, or clone the repo, and run `pod install` from the Example directory. 
 
 ## Usage
 Create a new instance using the class method 
