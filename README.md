@@ -13,10 +13,33 @@ To run the example project, clone the repo, and run `pod install` from the Examp
 
 ## Usage
 Create a new instance using the class method 
-``` 
+```swift
 emailPickerModal(infoText: String?, completion: EmailPickerCompletion)
 ```
 which returns a new EmailPicker instance wrapped in a UINavigationController to present modally. 
+
+Check out the example project for a usage example, like this: 
+
+```swift
+        let handler: EmailPickerCompletion = {(result) in
+            switch result {
+            case .Cancelled(let vc):
+                vc.dismissViewControllerAnimated(true) {
+                    self.contactsLabel.text = "Cancelled!"
+                }
+                break
+            case .Selected(let vc, let emails):
+                vc.dismissViewControllerAnimated(true) {
+                    self.contactsLabel.text = "Selected Emails: \(emails)"
+                }
+                break
+            }
+        }
+        
+        let picker = EmailPickerViewController.emailPickerModal("To share your fun results with some friends, please type their emails or select their names from the list. Enjoy!", completion: handler)
+        
+        presentViewController(picker, animated: true, completion: nil)
+```
 
 ## Requirements
 This is a Swift project and uses Swift specific features such as associated values on enums, so you cannot use this pod in an Objective-C project.
@@ -32,7 +55,7 @@ pod 'EmailPicker'
 
 ## Author
 
-Christian Hatch, christianhatch@gmail.com
+Christian Hatch, @commodoreftp
 
 ## License
 
