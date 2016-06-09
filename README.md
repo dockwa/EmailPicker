@@ -36,7 +36,8 @@ let handler: EmailPickerCompletion = {(result) in
     }
 }
 
-let picker = EmailPickerViewController.emailPickerModal("To share your fun results with some friends, please type their emails or select their names from the list. Enjoy!", completion: handler)
+let textToShow = "To share your fun results with some friends, please type their emails or select their names from the list. Enjoy!"
+let picker = EmailPickerViewController.emailPickerModal(textToShow, completion: handler)
         
 presentViewController(picker, animated: true, completion: nil)
 ```
