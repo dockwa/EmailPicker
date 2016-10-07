@@ -21,83 +21,83 @@ public typealias Email = String
  - Cancelled: The EmailPicker was cancelled, so no contacts were selected. Has the EmailPickerViewController to dismiss it.
  */
 public enum EmailPickerResult {
-    case Selected(EmailPickerViewController, [Email])
-    case Cancelled(EmailPickerViewController)
+    case selected(EmailPickerViewController, [Email])
+    case cancelled(EmailPickerViewController)
 }
 
 /// The completion closure for EmailPicker
 public typealias EmailPickerCompletion = (EmailPickerResult) -> Void
 
-public class EmailPickerViewController: UIViewController {
+open class EmailPickerViewController: UIViewController {
    
-    private lazy var tokenInputView: CLTokenInputView = {
+    fileprivate lazy var tokenInputView: CLTokenInputView = {
         let view = CLTokenInputView()
         view.delegate = self
         view.placeholderText = "Enter an email address"
         view.drawBottomBorder = true
         view.tokenizationCharacters = [" ", ","]
-        view.backgroundColor = .whiteColor()
+        view.backgroundColor = .white
         return view
     }()
-    private lazy var tableView: UITableView = {
+    fileprivate lazy var tableView: UITableView = {
         let table = UITableView()
-        table.registerNib(UINib(nibName: "EmailPickerCell", bundle: NSBundle(forClass: self.dynamicType)), forCellReuseIdentifier: "EmailPickerCell")
+        table.register(UINib(nibName: "EmailPickerCell", bundle: Bundle(for: type(of: self))), forCellReuseIdentifier: "EmailPickerCell")
         table.delegate = self
         table.dataSource = self
         table.rowHeight = EmailPickerCell.height
-        table.keyboardDismissMode = .OnDrag
+        table.keyboardDismissMode = .onDrag
         return table
     }()
-    private var loadingSpinner: UIActivityIndicatorView = {
-        let spinner = UIActivityIndicatorView(activityIndicatorStyle: .WhiteLarge)
-        spinner.color = .darkGrayColor()
+    fileprivate var loadingSpinner: UIActivityIndicatorView = {
+        let spinner = UIActivityIndicatorView(activityIndicatorStyle: .whiteLarge)
+        spinner.color = .darkGray
         spinner.hidesWhenStopped = true
         return spinner
     }()
-    private lazy var infoLabel: InsetLabel = {
+    fileprivate lazy var infoLabel: InsetLabel = {
         let label = InsetLabel()
         label.numberOfLines = 0
         label.adjustsFontSizeToFitWidth = true
         label.minimumScaleFactor = 0.5
-        label.textAlignment = .Center
+        label.textAlignment = .center
         return label
     }()
-    private var tokenHeightConstraint: NSLayoutConstraint?
+    fileprivate var tokenHeightConstraint: NSLayoutConstraint?
 
-    private lazy var addressBook: APAddressBook = {
+    fileprivate lazy var addressBook: APAddressBook = {
         let book = APAddressBook()
-        book.fieldsMask = [.Name, .Thumbnail, .EmailsOnly]
+        book.fieldsMask = [.name, .thumbnail, .emailsOnly]
         book.sortDescriptors = [NSSortDescriptor(key: "name.firstName", ascending: true),
                                 NSSortDescriptor(key: "name.lastName", ascending: true)]
         book.filterBlock = {(contact: APContact!) -> Bool in
-            guard let emails = contact.emails where emails.count > 0 else { return false }
+            guard let emails = contact.emails , emails.count > 0 else { return false }
             return true
         }
         return book
     }()
     
-    private var contacts: [APContact] = []
-    private var filteredContacts: [APContact] = []
-    private var selectedContacts: [APContact] = []
-    private var completion: EmailPickerCompletion?
-    private var infoText: String?
+    fileprivate var contacts: [APContact] = []
+    fileprivate var filteredContacts: [APContact] = []
+    fileprivate var selectedContacts: [APContact] = []
+    fileprivate var completion: EmailPickerCompletion?
+    fileprivate var infoText: String?
     
     
     //init
     required public init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
     }
-    override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: NSBundle?) {
+    override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
         super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
     }
-    public init(infoText: String? = nil, completion: EmailPickerCompletion) {
+    public init(infoText: String? = nil, completion: @escaping EmailPickerCompletion) {
         super.init(nibName: nil, bundle: nil)
         self.completion = completion
         self.infoText = infoText
         
         navigationItem.title = "Select Contacts"
-        navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .Cancel, target: self, action: #selector(EmailPickerViewController.cancel))
-        navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Done", style: .Plain, target: self, action: #selector(EmailPickerViewController.done))
+        navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .cancel, target: self, action: #selector(EmailPickerViewController.cancel))
+        navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Done", style: .plain, target: self, action: #selector(EmailPickerViewController.done))
     }
     
     
@@ -109,7 +109,7 @@ public class EmailPickerViewController: UIViewController {
      
      - returns: Returns an EmailPicker wrapped in a UINavigationController.
      */
-    public class func emailPickerModal(infoText: String? = nil, completion: EmailPickerCompletion) -> UINavigationController {
+    open class func emailPickerModal(_ infoText: String? = nil, completion: @escaping EmailPickerCompletion) -> UINavigationController {
         let picker = EmailPickerViewController(infoText: infoText, completion: completion)
         let nav = UINavigationController(rootViewController: picker)
         return nav
@@ -118,14 +118,14 @@ public class EmailPickerViewController: UIViewController {
 
 public extension EmailPickerViewController {
     
-    override func viewDidLoad() {
+    override open func viewDidLoad() {
         super.viewDidLoad()
         
         func setupView() {
             //view
-            view.backgroundColor = .whiteColor()
+            view.backgroundColor = .white
             
-            if let text = infoText where text.isEmpty == false {
+            if let text = infoText , text.isEmpty == false {
                 view.addSubview(infoLabel)
                 infoLabel.text = text
             }
@@ -142,27 +142,27 @@ public extension EmailPickerViewController {
     }
     
     
-    override func viewDidAppear(animated: Bool) {
+    override open func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         
-        if tokenInputView.editing == false {
+        if tokenInputView.isEditing == false {
             tokenInputView.beginEditing()
         }
     }
     
-    override func viewWillDisappear(animated: Bool) {
+    override open func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         tokenInputView.endEditing()
     }
     
 
     func cancel() {
-        completion?(.Cancelled(self))
+        completion?(.cancelled(self))
     }
     
     func done() {
         tokenInputView.tokenizeTextfieldText()
-        completion?(.Selected(self, selectedContacts.flatMap{$0.userSelectedEmail}))
+        completion?(.selected(self, selectedContacts.flatMap{$0.userSelectedEmail}))
     }
     
 }
@@ -172,7 +172,7 @@ public extension EmailPickerViewController {
 
 extension EmailPickerViewController: CLTokenInputViewDelegate {
     
-    public func tokenInputView(view: CLTokenInputView, didChangeText text: String?) {
+    public func tokenInputView(_ view: CLTokenInputView, didChangeText text: String?) {
         if text == "" {
             filteredContacts = contacts
         }
@@ -182,22 +182,22 @@ extension EmailPickerViewController: CLTokenInputViewDelegate {
         tableView.reloadData()
     }
     
-    public func tokenInputView(view: CLTokenInputView, didAddToken token: CLToken) {
+    public func tokenInputView(_ view: CLTokenInputView, didAdd token: CLToken) {
         if let contact = token.context as? APContact {
             selectedContacts.append(contact)
         }
     }
     
-    public func tokenInputView(view: CLTokenInputView, didRemoveToken token: CLToken) {
+    public func tokenInputView(_ view: CLTokenInputView, didRemove token: CLToken) {
         if let contact = token.context as? APContact {
-            if let idx = selectedContacts.indexOf(contact) {
-                selectedContacts.removeAtIndex(idx)
+            if let idx = selectedContacts.index(of: contact) {
+                selectedContacts.remove(at: idx)
             }
             tableView.reloadData()
         }
     }
     
-    public func tokenInputView(view: CLTokenInputView, tokenForText text: String) -> CLToken? {
+    public func tokenInputView(_ view: CLTokenInputView, tokenForText text: String) -> CLToken? {
         if filteredContacts.count > 0 {
             let contact = filteredContacts.first
             selectPreferedEmailForContact(contact!, fromView: view, completion: { (contact) -> Void in
@@ -217,15 +217,15 @@ extension EmailPickerViewController: CLTokenInputViewDelegate {
         return nil
     }
     
-    public func tokenInputViewDidEndEditing(view: CLTokenInputView) {
+    public func tokenInputViewDidEndEditing(_ view: CLTokenInputView) {
         
     }
     
-    public func tokenInputViewDidBeginEditing(view: CLTokenInputView) {
+    public func tokenInputViewDidBeginEditing(_ view: CLTokenInputView) {
         
     }
     
-    public func tokenInputView(view: CLTokenInputView, didChangeHeightTo height: CGFloat) {
+    public func tokenInputView(_ view: CLTokenInputView, didChangeHeightTo height: CGFloat) {
         tokenHeightConstraint?.constant = height
     }
 }
@@ -235,18 +235,18 @@ extension EmailPickerViewController: CLTokenInputViewDelegate {
 
 extension EmailPickerViewController: UITableViewDataSource {
     
-    public func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
+    @objc(tableView:heightForRowAtIndexPath:) public func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return EmailPickerCell.height
     }
     
-    public func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    public func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return filteredContacts.count
     }
     
-    public func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCellWithIdentifier("EmailPickerCell") as! EmailPickerCell
+    public func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: "EmailPickerCell") as! EmailPickerCell
         
-        let contact = filteredContacts[indexPath.row]
+        let contact = filteredContacts[(indexPath as NSIndexPath).row]
         if let img = contact.thumbnail {
             cell.thumbnailImageView.image = img
         }
@@ -256,7 +256,7 @@ extension EmailPickerViewController: UITableViewDataSource {
         cell.label.text = contact.name?.compositeName
         
         let isSelected = selectedContacts.contains(contact)
-        cell.accessoryType = isSelected ? .Checkmark : .None
+        cell.accessoryType = isSelected ? .checkmark : .none
         
         return cell
     }
@@ -266,24 +266,24 @@ extension EmailPickerViewController: UITableViewDataSource {
 
 extension EmailPickerViewController: UITableViewDelegate {
 
-    public func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        tableView.deselectRowAtIndexPath(indexPath, animated: true)
+    public func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        tableView.deselectRow(at: indexPath, animated: true)
         
-        let contact = filteredContacts[indexPath.row]
+        let contact = filteredContacts[(indexPath as NSIndexPath).row]
         
         if selectedContacts.contains(contact) { //we already have it, lets deselect it
-            if let idx = selectedContacts.indexOf(contact) {
-                selectedContacts.removeAtIndex(idx)
+            if let idx = selectedContacts.index(of: contact) {
+                selectedContacts.remove(at: idx)
             }
             tableView.reloadData()
             
             let token = tokenForContact(contact)
-            tokenInputView.removeToken(token)
+            tokenInputView.remove(token)
         }
         else { //we don't have it, lets select it
-            selectPreferedEmailForContact(contact, fromView: tableView.cellForRowAtIndexPath(indexPath)?.contentView, completion: { (contact) -> Void in
+            selectPreferedEmailForContact(contact, fromView: tableView.cellForRow(at: indexPath)?.contentView, completion: { (contact) -> Void in
                 let token = self.tokenForContact(contact)
-                self.tokenInputView.addToken(token)
+                self.tokenInputView.add(token)
             })
         }
     }
@@ -295,84 +295,84 @@ extension EmailPickerViewController: UITableViewDelegate {
 
 extension EmailPickerViewController {
     
-    typealias SelectedEmailCompletion = (contact: APContact) -> Void
+    typealias SelectedEmailCompletion = (_ contact: APContact) -> Void
    
-    private func selectPreferedEmailForContact(contact: APContact, fromView: UIView?, completion: SelectedEmailCompletion) {
+    fileprivate func selectPreferedEmailForContact(_ contact: APContact, fromView: UIView?, completion: @escaping SelectedEmailCompletion) {
         
         guard let mails = contact.emails else { return }
         
         if mails.count > 1 {
-            let alert = UIAlertController(title: "Choose Email", message: "Which email would you like to use?", preferredStyle: .ActionSheet)
+            let alert = UIAlertController(title: "Choose Email", message: "Which email would you like to use?", preferredStyle: .actionSheet)
             
             var actions = mails.map({ (email) -> UIAlertAction in
-                let action = UIAlertAction(title: email.address, style: .Default, handler: { (action) -> Void in
+                let action = UIAlertAction(title: email.address, style: .default, handler: { (action) -> Void in
                     contact.userSelectedEmail = action.title
-                    completion(contact: contact)
+                    completion(contact)
                 })
                 return action
             })
             
-            actions.append(UIAlertAction(title: "Cancel", style: .Cancel, handler: nil))
+            actions.append(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
             for act in actions {
                 alert.addAction(act)
             }
             
             if let fromView = fromView {
                 alert.popoverPresentationController?.sourceView = fromView
-                alert.popoverPresentationController?.permittedArrowDirections = [.Up, .Down]
+                alert.popoverPresentationController?.permittedArrowDirections = [.up, .down]
             }
             else {
                 alert.popoverPresentationController?.sourceView = self.view
             }
             
-            presentViewController(alert, animated: true, completion: nil)
+            present(alert, animated: true, completion: nil)
         }
         else {
             contact.userSelectedEmail = mails.first?.address!
-            completion(contact: contact)
+            completion(contact)
         }
         
     }
     
     
-    private func tokenForContact(contact: APContact) -> CLToken {
+    fileprivate func tokenForContact(_ contact: APContact) -> CLToken {
         let token = CLToken(displayText: contact.userSelectedEmail!, context: contact)
         return token
     }
     
 
-    private func filterContactsWithSearchText(text: String) {
+    fileprivate func filterContactsWithSearchText(_ text: String) {
         let array = NSArray(array: self.contacts)
         
         let predicate = NSPredicate(format: "self.name.firstName contains[cd] %@ OR self.name.lastName contains[cd] %@", text, text)
-        self.filteredContacts = array.filteredArrayUsingPredicate(predicate) as! [APContact]
+        self.filteredContacts = array.filtered(using: predicate) as! [APContact]
     }
     
-    private func showNoAccessAlert(withError: NSError? = nil) {
+    fileprivate func showNoAccessAlert(_ withError: NSError? = nil) {
         let msg = "This app might not have permission to show your contacts.\nTo allow this app to show your contacts, tap Settings and make sure Contacts is switched on. (\(withError?.localizedDescription ?? ""))."
         
-        let alert = UIAlertController(title: "Error Loading Contacts", message: msg, preferredStyle: .Alert)
-        let action = UIAlertAction(title: "Settings", style: .Default, handler: { (action) in
-            UIApplication.sharedApplication().openURL(NSURL(string: UIApplicationOpenSettingsURLString)!)
+        let alert = UIAlertController(title: "Error Loading Contacts", message: msg, preferredStyle: .alert)
+        let action = UIAlertAction(title: "Settings", style: .default, handler: { (action) in
+            UIApplication.shared.openURL(URL(string: UIApplicationOpenSettingsURLString)!)
         })
-        let cancel = UIAlertAction(title: "Cancel", style: .Cancel, handler: nil)
+        let cancel = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
         alert.addAction(action)
         alert.addAction(cancel)
-        self.presentViewController(alert, animated: true, completion: nil)
+        self.present(alert, animated: true, completion: nil)
     }
     
-    private func loadContacts() {
+    fileprivate func loadContacts() {
         
         func showLoading() {
-            tableView.hidden = true
-            tokenInputView.userInteractionEnabled = false
+            tableView.isHidden = true
+            tokenInputView.isUserInteractionEnabled = false
             loadingSpinner.startAnimating()
         }
         
         func finishLoading() {
-            tableView.hidden = false
+            tableView.isHidden = false
             loadingSpinner.stopAnimating()
-            tokenInputView.userInteractionEnabled = true
+            tokenInputView.isUserInteractionEnabled = true
         }
         
         showLoading()
@@ -385,7 +385,7 @@ extension EmailPickerViewController {
                 self.tableView.reloadData()
             }
             else if let error = error {
-                self.showNoAccessAlert(error)
+                self.showNoAccessAlert(error as NSError?)
             }
         }
 
@@ -398,14 +398,14 @@ extension EmailPickerViewController {
 
 extension EmailPickerViewController {
     
-    private func addLayoutConstraints() {
+    fileprivate func addLayoutConstraints() {
         
         func addConstraintsForInfoLabel() {
             infoLabel.translatesAutoresizingMaskIntoConstraints = false
-            let top = NSLayoutConstraint(item: infoLabel, attribute: .Top, relatedBy: .Equal, toItem: topLayoutGuide, attribute: .Bottom, multiplier: 1, constant: 0)
-            let left = NSLayoutConstraint(item: infoLabel, attribute: .Leading, relatedBy: .Equal, toItem: view, attribute: .Leading, multiplier: 1, constant: 0)
-            let right = NSLayoutConstraint(item: infoLabel, attribute: .Trailing, relatedBy: .Equal, toItem: view, attribute: .Trailing, multiplier: 1, constant: 0)
-            let height = NSLayoutConstraint(item: infoLabel, attribute: .Height, relatedBy: .Equal, toItem: nil, attribute: .Height, multiplier: 1, constant: 60)
+            let top = NSLayoutConstraint(item: infoLabel, attribute: .top, relatedBy: .equal, toItem: topLayoutGuide, attribute: .bottom, multiplier: 1, constant: 0)
+            let left = NSLayoutConstraint(item: infoLabel, attribute: .leading, relatedBy: .equal, toItem: view, attribute: .leading, multiplier: 1, constant: 0)
+            let right = NSLayoutConstraint(item: infoLabel, attribute: .trailing, relatedBy: .equal, toItem: view, attribute: .trailing, multiplier: 1, constant: 0)
+            let height = NSLayoutConstraint(item: infoLabel, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .height, multiplier: 1, constant: 60)
             infoLabel.addConstraint(height)
             view.addConstraints([top, left, right])
         }
@@ -414,25 +414,25 @@ extension EmailPickerViewController {
             tokenInputView.translatesAutoresizingMaskIntoConstraints = false
             
             
-            if let text = infoText where text.isEmpty == false {
-                let top = NSLayoutConstraint(item: tokenInputView, attribute: .Top, relatedBy: .Equal, toItem: infoLabel, attribute: .Bottom, multiplier: 1, constant: 0)
-                let left = NSLayoutConstraint(item: tokenInputView, attribute: .Leading, relatedBy: .Equal, toItem: view, attribute: .Leading, multiplier: 1, constant: 0)
-                let right = NSLayoutConstraint(item: tokenInputView, attribute: .Trailing, relatedBy: .Equal, toItem: view, attribute: .Trailing, multiplier: 1, constant: 0)
+            if let text = infoText , text.isEmpty == false {
+                let top = NSLayoutConstraint(item: tokenInputView, attribute: .top, relatedBy: .equal, toItem: infoLabel, attribute: .bottom, multiplier: 1, constant: 0)
+                let left = NSLayoutConstraint(item: tokenInputView, attribute: .leading, relatedBy: .equal, toItem: view, attribute: .leading, multiplier: 1, constant: 0)
+                let right = NSLayoutConstraint(item: tokenInputView, attribute: .trailing, relatedBy: .equal, toItem: view, attribute: .trailing, multiplier: 1, constant: 0)
                 
                 let heightConstant = tokenHeightConstraint?.constant ?? 45
-                let height = NSLayoutConstraint(item: tokenInputView, attribute: .Height, relatedBy: .Equal, toItem: nil, attribute: .Height, multiplier: 1, constant: heightConstant)
+                let height = NSLayoutConstraint(item: tokenInputView, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .height, multiplier: 1, constant: heightConstant)
                 tokenHeightConstraint = height
                 
                 tokenInputView.addConstraint(height)
                 view.addConstraints([top, left, right])
             }
             else {
-                let top = NSLayoutConstraint(item: tokenInputView, attribute: .Top, relatedBy: .Equal, toItem: topLayoutGuide, attribute: .Bottom, multiplier: 1, constant: 0)
-                let left = NSLayoutConstraint(item: tokenInputView, attribute: .Leading, relatedBy: .Equal, toItem: view, attribute: .Leading, multiplier: 1, constant: 0)
-                let right = NSLayoutConstraint(item: tokenInputView, attribute: .Trailing, relatedBy: .Equal, toItem: view, attribute: .Trailing, multiplier: 1, constant: 0)
+                let top = NSLayoutConstraint(item: tokenInputView, attribute: .top, relatedBy: .equal, toItem: topLayoutGuide, attribute: .bottom, multiplier: 1, constant: 0)
+                let left = NSLayoutConstraint(item: tokenInputView, attribute: .leading, relatedBy: .equal, toItem: view, attribute: .leading, multiplier: 1, constant: 0)
+                let right = NSLayoutConstraint(item: tokenInputView, attribute: .trailing, relatedBy: .equal, toItem: view, attribute: .trailing, multiplier: 1, constant: 0)
                
                 let heightConstant = tokenHeightConstraint?.constant ?? 45
-                let height = NSLayoutConstraint(item: tokenInputView, attribute: .Height, relatedBy: .Equal, toItem: nil, attribute: .Height, multiplier: 1, constant: heightConstant)
+                let height = NSLayoutConstraint(item: tokenInputView, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .height, multiplier: 1, constant: heightConstant)
                 tokenHeightConstraint = height
                 
                 tokenInputView.addConstraint(height)
@@ -442,21 +442,21 @@ extension EmailPickerViewController {
         
         func addConstraintsForTableView() {
             tableView.translatesAutoresizingMaskIntoConstraints = false
-            let top = NSLayoutConstraint(item: tableView, attribute: .Top, relatedBy: .Equal, toItem: tokenInputView, attribute: .Bottom, multiplier: 1, constant: 0)
-            let left = NSLayoutConstraint(item: tableView, attribute: .Leading, relatedBy: .Equal, toItem: view, attribute: .Leading, multiplier: 1, constant: 0)
-            let right = NSLayoutConstraint(item: tableView, attribute: .Trailing, relatedBy: .Equal, toItem: view, attribute: .Trailing, multiplier: 1, constant: 0)
-            let bottom = NSLayoutConstraint(item: tableView, attribute: .Bottom, relatedBy: .Equal, toItem: view, attribute: .Bottom, multiplier: 1, constant: 0)
+            let top = NSLayoutConstraint(item: tableView, attribute: .top, relatedBy: .equal, toItem: tokenInputView, attribute: .bottom, multiplier: 1, constant: 0)
+            let left = NSLayoutConstraint(item: tableView, attribute: .leading, relatedBy: .equal, toItem: view, attribute: .leading, multiplier: 1, constant: 0)
+            let right = NSLayoutConstraint(item: tableView, attribute: .trailing, relatedBy: .equal, toItem: view, attribute: .trailing, multiplier: 1, constant: 0)
+            let bottom = NSLayoutConstraint(item: tableView, attribute: .bottom, relatedBy: .equal, toItem: view, attribute: .bottom, multiplier: 1, constant: 0)
             view.addConstraints([top, left, right, bottom])
         }
         
         func addConstraintsForLoadingSpinner() {
             loadingSpinner.translatesAutoresizingMaskIntoConstraints = false
-            let alignVertical = NSLayoutConstraint(item: loadingSpinner, attribute: .CenterX, relatedBy: .Equal, toItem: view, attribute: .CenterX, multiplier: 1, constant: 0)
-            let alignHorizontal = NSLayoutConstraint(item: loadingSpinner, attribute: .CenterY, relatedBy: .Equal, toItem: view, attribute: .CenterY, multiplier: 1, constant: 0)
+            let alignVertical = NSLayoutConstraint(item: loadingSpinner, attribute: .centerX, relatedBy: .equal, toItem: view, attribute: .centerX, multiplier: 1, constant: 0)
+            let alignHorizontal = NSLayoutConstraint(item: loadingSpinner, attribute: .centerY, relatedBy: .equal, toItem: view, attribute: .centerY, multiplier: 1, constant: 0)
             view.addConstraints([alignVertical, alignHorizontal])
         }
         
-        if let text = infoText where text.isEmpty == false {
+        if let text = infoText , text.isEmpty == false {
             addConstraintsForInfoLabel()
         }
         
@@ -474,7 +474,7 @@ extension EmailPickerViewController {
 private extension String {
     func isEmail() -> Bool {
         let emailRegex = "[A-Z0-9a-z._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,6}"
-        return NSPredicate(format: "SELF MATCHES %@", emailRegex).evaluateWithObject(self)
+        return NSPredicate(format: "SELF MATCHES %@", emailRegex).evaluate(with: self)
     }
 }
 
@@ -512,9 +512,9 @@ class EmailPickerCell: UITableViewCell {
 //MARK: - UILabel Inset Subclass 
 
 class InsetLabel: UILabel {
-    override func drawTextInRect(rect: CGRect) {
+    override func drawText(in rect: CGRect) {
         let insets = UIEdgeInsets(top: 10, left: 10, bottom: 10, right: 10)
-        super.drawTextInRect(UIEdgeInsetsInsetRect(rect, insets))
+        super.drawText(in: UIEdgeInsetsInsetRect(rect, insets))
     }
 }
 
