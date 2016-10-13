@@ -44,12 +44,11 @@ extension ViewController {
                 vc.dismiss(animated: true) {
                     self.contactsLabel.text = "Cancelled!"
                 }
-                break
+
             case .selected(let vc, let emails):
                 vc.dismiss(animated: true) {
                     self.contactsLabel.text = "Selected Emails: \(emails)"
                 }
-                break
             }
         }
         let textToShow = "To share your fun results with some friends, please type their emails or select their names from the list. Enjoy!"
