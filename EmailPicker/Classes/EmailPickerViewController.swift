@@ -11,25 +11,26 @@ import CLTokenInputView
 import APAddressBook
 
 
-///A typealias for an email.
-public typealias Email = String
-
-/**
- An enum representing the result of the EmailPicker
- 
- - Selected:  Some contacts were selected. Has an array of the emails that were selected, and the EmailPickerViewController to dismiss it.
- - Cancelled: The EmailPicker was cancelled, so no contacts were selected. Has the EmailPickerViewController to dismiss it.
- */
-public enum EmailPickerResult {
-    case selected(EmailPickerViewController, [Email])
-    case cancelled(EmailPickerViewController)
-}
-
-/// The completion closure for EmailPicker
-public typealias EmailPickerCompletion = (EmailPickerResult) -> Void
-
 open class EmailPickerViewController: UIViewController {
-   
+    ///A typealias for an email.
+    public typealias Email = String
+    
+    /**
+     An enum representing the result of the EmailPicker
+     
+     - Selected:  Some contacts were selected. Has an array of the emails that were selected, and the EmailPickerViewController to dismiss it.
+     - Cancelled: The EmailPicker was cancelled, so no contacts were selected. Has the EmailPickerViewController to dismiss it.
+     */
+    public enum Result {
+        case selected(EmailPickerViewController, [Email])
+        case cancelled(EmailPickerViewController)
+    }
+    
+    /// The completion closure for EmailPicker
+    public typealias CompletionHandler = (Result) -> Void
+
+    
+    
     fileprivate lazy var tokenInputView: CLTokenInputView = {
         let view = CLTokenInputView()
         view.delegate = self
@@ -79,7 +80,7 @@ open class EmailPickerViewController: UIViewController {
     fileprivate var contacts: [APContact] = []
     fileprivate var filteredContacts: [APContact] = []
     fileprivate var selectedContacts: [APContact] = []
-    fileprivate var completion: EmailPickerCompletion?
+    fileprivate var completion: CompletionHandler?
     fileprivate var infoText: String?
     
     
@@ -90,7 +91,7 @@ open class EmailPickerViewController: UIViewController {
     override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
         super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
     }
-    public init(infoText: String? = nil, completion: @escaping EmailPickerCompletion) {
+    public init(infoText: String? = nil, completion: @escaping CompletionHandler) {
         super.init(nibName: nil, bundle: nil)
         self.completion = completion
         self.infoText = infoText
@@ -109,7 +110,7 @@ open class EmailPickerViewController: UIViewController {
      
      - returns: Returns an EmailPicker wrapped in a UINavigationController.
      */
-    open class func emailPickerModal(_ infoText: String? = nil, completion: @escaping EmailPickerCompletion) -> UINavigationController {
+    open class func emailPickerModal(_ infoText: String? = nil, completion: @escaping CompletionHandler) -> UINavigationController {
         let picker = EmailPickerViewController(infoText: infoText, completion: completion)
         let nav = UINavigationController(rootViewController: picker)
         return nav

@@ -210,13 +210,13 @@
 			isa = PBXProject;
 			attributes = {
 				LastSwiftUpdateCheck = 0720;
-				LastUpgradeCheck = 0800;
+				LastUpgradeCheck = 0820;
 				ORGANIZATIONNAME = CocoaPods;
 				TargetAttributes = {
 					607FACCF1AFB9204008FA782 = {
 						CreatedOnToolsVersion = 6.3.1;
 						DevelopmentTeam = YWKER65N63;
-						LastSwiftMigration = 0800;
+						LastSwiftMigration = 0820;
 					};
 					607FACE41AFB9204008FA782 = {
 						CreatedOnToolsVersion = 6.3.1;

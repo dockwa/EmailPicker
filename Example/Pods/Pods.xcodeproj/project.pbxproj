@@ -715,7 +715,7 @@
 						LastSwiftMigration = 0800;
 					};
 					AEFAAFE7A3B8BD5118113B9CC198D382 = {
-						LastSwiftMigration = 0800;
+						LastSwiftMigration = 0820;
 					};
 				};
 			};

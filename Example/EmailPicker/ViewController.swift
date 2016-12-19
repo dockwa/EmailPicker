@@ -38,7 +38,7 @@ extension ViewController {
     
     @IBAction func selectContactsButtonTapped(_ sender: UIButton) {
         
-        let handler: EmailPickerCompletion = {(result) in
+        let handler: EmailPickerViewController.CompletionHandler = {(result) in
             switch result {
             case .cancelled(let vc):
                 vc.dismiss(animated: true) {
