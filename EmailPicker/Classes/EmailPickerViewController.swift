@@ -260,10 +260,10 @@ extension EmailPickerViewController: UITableViewDataSource {
         let cell = tableView.dequeueReusableCell(withIdentifier: "EmailPickerCell") as! EmailPickerCell
         
         let contact = filteredContacts[indexPath.row]
+        let isSelected = selectedContacts.contains(contact)
+
         cell.thumbnailImageView.image = contact.thumbnail
         cell.label.text = contact.name?.compositeName
-        
-        let isSelected = selectedContacts.contains(contact)
         cell.accessoryType = isSelected ? .checkmark : .none
         
         return cell
@@ -342,7 +342,6 @@ extension EmailPickerViewController {
         }
         
         present(alert, animated: true, completion: nil)
-        
     }
     
     
@@ -425,7 +424,6 @@ extension EmailPickerViewController {
         
         func addConstraintsForTokenInputView() {
             tokenInputView.translatesAutoresizingMaskIntoConstraints = false
-            
             
             if let text = infoText , text.isEmpty == false {
                 let top = NSLayoutConstraint(item: tokenInputView, attribute: .top, relatedBy: .equal, toItem: infoLabel, attribute: .bottom, multiplier: 1, constant: 0)
@@ -511,14 +509,13 @@ private extension APContact {
 class EmailPickerCell: UITableViewCell {
     static let height: CGFloat = 60
     
-    @IBOutlet weak var thumbnailImageView: UIImageView!
+    @IBOutlet weak var thumbnailImageView: UIImageView! {
+        didSet {
+            thumbnailImageView.layer.cornerRadius = 20
+        }
+    }
     @IBOutlet weak var label: UILabel!
     
-    
-    override func awakeFromNib() {
-        super.awakeFromNib()
-        thumbnailImageView.layer.cornerRadius = thumbnailImageView.frame.size.height / 2
-    }
 }
 
 
