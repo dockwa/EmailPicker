@@ -84,7 +84,8 @@ open class EmailPickerViewController: UIViewController {
     fileprivate var infoText: String?
     
     
-    //init
+    //MARK: - Init 
+    
     required public init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
     }
@@ -101,6 +102,12 @@ open class EmailPickerViewController: UIViewController {
         navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Done", style: .plain, target: self, action: #selector(EmailPickerViewController.done))
     }
     
+}
+
+
+//MARK: - Prefered Initialization 
+
+extension EmailPickerViewController {
     
     /**
      This is the prefered method to create a new EmailPicker. Use this method and present modally.
@@ -116,6 +123,9 @@ open class EmailPickerViewController: UIViewController {
         return nav
     }
 }
+
+
+//MARK: - UIKit
 
 extension EmailPickerViewController {
     
