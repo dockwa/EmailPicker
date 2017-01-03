@@ -117,7 +117,7 @@ open class EmailPickerViewController: UIViewController {
     }
 }
 
-public extension EmailPickerViewController {
+extension EmailPickerViewController {
     
     override open func viewDidLoad() {
         super.viewDidLoad()
@@ -174,12 +174,15 @@ public extension EmailPickerViewController {
 extension EmailPickerViewController: CLTokenInputViewDelegate {
     
     public func tokenInputView(_ view: CLTokenInputView, didChangeText text: String?) {
+        guard let text = text else { return }
+        
         if text == "" {
             filteredContacts = contacts
         }
         else {
-            filterContactsWithSearchText(text!)
+            filterContacts(withSearchText: text)
         }
+        
         tableView.reloadData()
     }
     
@@ -200,13 +203,12 @@ extension EmailPickerViewController: CLTokenInputViewDelegate {
     
     public func tokenInputView(_ view: CLTokenInputView, tokenForText text: String) -> CLToken? {
         if filteredContacts.count > 0 {
-            let contact = filteredContacts.first
-            selectPreferedEmailForContact(contact!, fromView: view, completion: { (contact) -> Void in
-                return self.tokenForContact(contact)
-            })
+            guard let contact = filteredContacts.first else { return nil }
+            
+            selectPreferedEmail(forContact: contact, fromView: view, completion: nil)
         }
         else { //lets create a token
-            if text.isEmail() {
+            if text.isEmail {
                 let contact = APContact()
                 contact.userSelectedEmail = text
                 
@@ -247,13 +249,8 @@ extension EmailPickerViewController: UITableViewDataSource {
     public func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "EmailPickerCell") as! EmailPickerCell
         
-        let contact = filteredContacts[(indexPath as NSIndexPath).row]
-        if let img = contact.thumbnail {
-            cell.thumbnailImageView.image = img
-        }
-        else {
-            cell.thumbnailImageView.image = nil
-        }
+        let contact = filteredContacts[indexPath.row]
+        cell.thumbnailImageView.image = contact.thumbnail
         cell.label.text = contact.name?.compositeName
         
         let isSelected = selectedContacts.contains(contact)
@@ -263,6 +260,7 @@ extension EmailPickerViewController: UITableViewDataSource {
     }
 }
 
+
 //MARK: - TableView Delegate
 
 extension EmailPickerViewController: UITableViewDelegate {
@@ -270,7 +268,7 @@ extension EmailPickerViewController: UITableViewDelegate {
     public func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
         
-        let contact = filteredContacts[(indexPath as NSIndexPath).row]
+        let contact = filteredContacts[indexPath.row]
         
         if selectedContacts.contains(contact) { //we already have it, lets deselect it
             if let idx = selectedContacts.index(of: contact) {
@@ -278,12 +276,12 @@ extension EmailPickerViewController: UITableViewDelegate {
             }
             tableView.reloadData()
             
-            let token = tokenForContact(contact)
+            guard let token = makeToken(forContact: contact) else { return }
             tokenInputView.remove(token)
         }
         else { //we don't have it, lets select it
-            selectPreferedEmailForContact(contact, fromView: tableView.cellForRow(at: indexPath)?.contentView, completion: { (contact) -> Void in
-                let token = self.tokenForContact(contact)
+            selectPreferedEmail(forContact: contact, fromView: tableView.cellForRow(at: indexPath)?.contentView, completion: { (contact) -> Void in
+                guard let token = self.makeToken(forContact: contact) else { return }
                 self.tokenInputView.add(token)
             })
         }
@@ -296,60 +294,63 @@ extension EmailPickerViewController: UITableViewDelegate {
 
 extension EmailPickerViewController {
     
-    typealias SelectedEmailCompletion = (_ contact: APContact) -> Void
+    typealias SelectedEmailCompletion = (APContact) -> Void
    
-    fileprivate func selectPreferedEmailForContact(_ contact: APContact, fromView: UIView?, completion: @escaping SelectedEmailCompletion) {
+    fileprivate func selectPreferedEmail(forContact contact: APContact, fromView: UIView?, completion: SelectedEmailCompletion?) {
         
         guard let mails = contact.emails else { return }
         
-        if mails.count > 1 {
-            let alert = UIAlertController(title: "Choose Email", message: "Which email would you like to use?", preferredStyle: .actionSheet)
-            
-            var actions = mails.map({ (email) -> UIAlertAction in
-                let action = UIAlertAction(title: email.address, style: .default, handler: { (action) -> Void in
-                    contact.userSelectedEmail = action.title
-                    completion(contact)
-                })
-                return action
+        guard mails.count > 1 else {
+            contact.userSelectedEmail = mails.first?.address!
+            completion?(contact)
+            return
+        }
+    
+        //make actions
+        var actions = mails.map({ (email) -> UIAlertAction in
+            let action = UIAlertAction(title: email.address, style: .default, handler: { (action) -> Void in
+                contact.userSelectedEmail = action.title
+                completion?(contact)
             })
-            
-            actions.append(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
-            for act in actions {
-                alert.addAction(act)
-            }
-            
-            if let fromView = fromView {
-                alert.popoverPresentationController?.sourceView = fromView
-                alert.popoverPresentationController?.permittedArrowDirections = [.up, .down]
-            }
-            else {
-                alert.popoverPresentationController?.sourceView = self.view
-            }
-            
-            present(alert, animated: true, completion: nil)
+            return action
+        })
+        actions.append(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
+        
+        //create alert
+        let alert = UIAlertController(title: "Choose Email", message: "Which email would you like to use?", preferredStyle: .actionSheet)
+        for act in actions {
+            alert.addAction(act)
+        }
+        
+        //show alert
+        if let fromView = fromView {
+            alert.popoverPresentationController?.sourceView = fromView
+            alert.popoverPresentationController?.permittedArrowDirections = [.up, .down]
         }
         else {
-            contact.userSelectedEmail = mails.first?.address!
-            completion(contact)
+            alert.popoverPresentationController?.sourceView = self.view
         }
+        
+        present(alert, animated: true, completion: nil)
         
     }
     
     
-    fileprivate func tokenForContact(_ contact: APContact) -> CLToken {
-        let token = CLToken(displayText: contact.userSelectedEmail!, context: contact)
+    fileprivate func makeToken(forContact contact: APContact) -> CLToken? {
+        guard let email = contact.userSelectedEmail else { return nil }
+        let token = CLToken(displayText: email, context: contact)
         return token
     }
     
 
-    fileprivate func filterContactsWithSearchText(_ text: String) {
+    fileprivate func filterContacts(withSearchText text: String) {
         let array = NSArray(array: self.contacts)
         
         let predicate = NSPredicate(format: "self.name.firstName contains[cd] %@ OR self.name.lastName contains[cd] %@", text, text)
         self.filteredContacts = array.filtered(using: predicate) as! [APContact]
     }
     
-    fileprivate func showNoAccessAlert(_ withError: NSError? = nil) {
+    fileprivate func showNoAccessAlert(withError: NSError? = nil) {
         let msg = "This app might not have permission to show your contacts.\nTo allow this app to show your contacts, tap Settings and make sure Contacts is switched on. (\(withError?.localizedDescription ?? ""))."
         
         let alert = UIAlertController(title: "Error Loading Contacts", message: msg, preferredStyle: .alert)
@@ -361,6 +362,7 @@ extension EmailPickerViewController {
         alert.addAction(cancel)
         self.present(alert, animated: true, completion: nil)
     }
+    
     
     fileprivate func loadContacts() {
         
@@ -386,7 +388,7 @@ extension EmailPickerViewController {
                 self.tableView.reloadData()
             }
             else if let error = error {
-                self.showNoAccessAlert(error as NSError?)
+                self.showNoAccessAlert(withError: error as NSError?)
             }
         }
 
@@ -473,7 +475,7 @@ extension EmailPickerViewController {
 //MARK: - Extensions
 
 private extension String {
-    func isEmail() -> Bool {
+    var isEmail: Bool {
         let emailRegex = "[A-Z0-9a-z._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,6}"
         return NSPredicate(format: "SELF MATCHES %@", emailRegex).evaluate(with: self)
     }
@@ -501,6 +503,7 @@ class EmailPickerCell: UITableViewCell {
     
     @IBOutlet weak var thumbnailImageView: UIImageView!
     @IBOutlet weak var label: UILabel!
+    
     
     override func awakeFromNib() {
         super.awakeFromNib()

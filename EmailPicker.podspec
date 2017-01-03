@@ -8,8 +8,8 @@
 
 Pod::Spec.new do |s|
   s.name             = "EmailPicker"
-  s.version          = "0.1.0"
-  s.summary          = "A viewcontroller to select emails, written in Swift."
+  s.version          = "1.0.0"
+  s.summary          = "A viewcontroller to select emails, written in Swift 3."
 
   s.description      = <<-DESC
 
@@ -18,7 +18,6 @@ Pod::Spec.new do |s|
     DESC
 
   s.homepage         = "https://github.com/dockwa/EmailPicker"
-  # s.screenshots     = "www.example.com/screenshots_1", "www.example.com/screenshots_2"
   s.license          = 'MIT'
   s.author           = { "Christian Hatch" => "christianhatch@gmail.com" }
   s.source           = { :git => "https://github.com/dockwa/EmailPicker.git", :tag => s.version.to_s }
@@ -28,10 +27,6 @@ Pod::Spec.new do |s|
 
   s.source_files = 'EmailPicker/Classes/**/*'
 
- #s.resources = { 'EmailPicker' => ['Pod/**/*.xib'] }
-
-
-  # s.public_header_files = 'Pod/Classes/**/*.h'
   s.dependency 'CLTokenInputView'
   s.dependency 'APAddressBook'
 
