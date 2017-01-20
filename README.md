@@ -5,7 +5,7 @@
 [![License](https://img.shields.io/cocoapods/l/EmailPicker.svg?style=flat)](http://cocoapods.org/pods/EmailPicker)
 [![Platform](https://img.shields.io/cocoapods/p/EmailPicker.svg?style=flat)](http://cocoapods.org/pods/EmailPicker)
 
-## What Is
+## What It Is
 
 EmailPicker is a simple Swift 3 viewcontroller to easily select emails from a user's contacts and/or enter them manually. Great for sharing content or inviting users.
 
