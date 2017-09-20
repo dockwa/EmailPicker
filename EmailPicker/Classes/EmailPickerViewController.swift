@@ -167,11 +167,11 @@ extension EmailPickerViewController {
     }
     
 
-    func cancel() {
+    @objc func cancel() {
         completion?(.cancelled(self))
     }
     
-    func done() {
+    @objc func done() {
         tokenInputView.tokenizeTextfieldText()
         completion?(.selected(self, selectedContacts.flatMap{$0.userSelectedEmail}))
     }
