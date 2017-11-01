@@ -12,7 +12,7 @@ import APAddressBook
 
 
 open class EmailPickerViewController: UIViewController {
-    ///A typealias for an email.
+
     public typealias Email = String
     
     /**
@@ -26,12 +26,11 @@ open class EmailPickerViewController: UIViewController {
         case cancelled(EmailPickerViewController)
     }
     
-    /// The completion closure for EmailPicker
     public typealias CompletionHandler = (Result) -> Void
 
     
     
-    fileprivate lazy var tokenInputView: CLTokenInputView = {
+    private lazy var tokenInputView: CLTokenInputView = {
         let view = CLTokenInputView()
         view.delegate = self
         view.placeholderText = "Enter an email address"
@@ -40,7 +39,7 @@ open class EmailPickerViewController: UIViewController {
         view.backgroundColor = .white
         return view
     }()
-    fileprivate lazy var tableView: UITableView = {
+    private lazy var tableView: UITableView = {
         let table = UITableView()
         table.register(UINib(nibName: "EmailPickerCell", bundle: Bundle(for: type(of: self))), forCellReuseIdentifier: "EmailPickerCell")
         table.delegate = self
@@ -49,13 +48,13 @@ open class EmailPickerViewController: UIViewController {
         table.keyboardDismissMode = .onDrag
         return table
     }()
-    fileprivate var loadingSpinner: UIActivityIndicatorView = {
+    private var loadingSpinner: UIActivityIndicatorView = {
         let spinner = UIActivityIndicatorView(activityIndicatorStyle: .whiteLarge)
         spinner.color = .darkGray
         spinner.hidesWhenStopped = true
         return spinner
     }()
-    fileprivate lazy var infoLabel: InsetLabel = {
+    private lazy var infoLabel: InsetLabel = {
         let label = InsetLabel()
         label.numberOfLines = 0
         label.adjustsFontSizeToFitWidth = true
@@ -63,9 +62,9 @@ open class EmailPickerViewController: UIViewController {
         label.textAlignment = .center
         return label
     }()
-    fileprivate var tokenHeightConstraint: NSLayoutConstraint?
+    private var tokenHeightConstraint: NSLayoutConstraint?
 
-    fileprivate lazy var addressBook: APAddressBook = {
+    private lazy var addressBook: APAddressBook = {
         let book = APAddressBook()
         book.fieldsMask = [.name, .thumbnail, .emailsOnly]
         book.sortDescriptors = [NSSortDescriptor(key: "name.firstName", ascending: true),
@@ -77,31 +76,30 @@ open class EmailPickerViewController: UIViewController {
         return book
     }()
     
-    fileprivate var contacts: [APContact] = []
-    fileprivate var filteredContacts: [APContact] = []
-    fileprivate var selectedContacts: [APContact] = []
-    fileprivate var completion: CompletionHandler?
-    fileprivate var infoText: String?
+    private var contacts: [APContact] = []
+    private var filteredContacts: [APContact] = []
+    private var selectedContacts: [APContact] = []
+    private var completion: CompletionHandler?
+    private var infoText: String?
     
     
-    //MARK: - Init 
+    //MARK: - Init
     
+    public init(infoText: String? = nil, doneButtonTitle: String = "Done", completion: @escaping CompletionHandler) {
+        super.init(nibName: nil, bundle: nil)
+        self.completion = completion
+        self.infoText = infoText
+        
+        navigationItem.title = "Select Contacts"
+        navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .cancel, target: self, action: #selector(self.cancel))
+        navigationItem.rightBarButtonItem = UIBarButtonItem(title: doneButtonTitle, style: .done, target: self, action: #selector(self.done))
+    }
     required public init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
     }
     override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
         super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
     }
-    public init(infoText: String? = nil, completion: @escaping CompletionHandler) {
-        super.init(nibName: nil, bundle: nil)
-        self.completion = completion
-        self.infoText = infoText
-        
-        navigationItem.title = "Select Contacts"
-        navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .cancel, target: self, action: #selector(EmailPickerViewController.cancel))
-        navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Done", style: .plain, target: self, action: #selector(EmailPickerViewController.done))
-    }
-    
 }
 
 
@@ -117,7 +115,7 @@ extension EmailPickerViewController {
      
      - returns: Returns an EmailPicker wrapped in a UINavigationController.
      */
-    open class func emailPickerModal(_ infoText: String? = nil, completion: @escaping CompletionHandler) -> UINavigationController {
+    open class func emailPickerModal(_ infoText: String? = nil, doneButtonTitle: String = "Done", completion: @escaping CompletionHandler) -> UINavigationController {
         let picker = EmailPickerViewController(infoText: infoText, completion: completion)
         let nav = UINavigationController(rootViewController: picker)
         return nav
@@ -131,22 +129,6 @@ extension EmailPickerViewController {
     
     override open func viewDidLoad() {
         super.viewDidLoad()
-        
-        func setupView() {
-            //view
-            view.backgroundColor = .white
-            
-            if let text = infoText , text.isEmpty == false {
-                view.addSubview(infoLabel)
-                infoLabel.text = text
-            }
-            
-            view.addSubview(tokenInputView)
-            view.addSubview(tableView)
-            view.insertSubview(loadingSpinner, aboveSubview: tableView)
-            
-            addLayoutConstraints()
-        }
         
         setupView()
         loadContacts()
@@ -300,13 +282,13 @@ extension EmailPickerViewController: UITableViewDelegate {
 
 
 
-//MARK: - Helpers
+//MARK: - Contact Helpers
 
 extension EmailPickerViewController {
     
     typealias SelectedEmailCompletion = (APContact) -> Void
    
-    fileprivate func selectPreferedEmail(forContact contact: APContact, fromView: UIView?, completion: SelectedEmailCompletion?) {
+    private func selectPreferedEmail(forContact contact: APContact, fromView: UIView?, completion: SelectedEmailCompletion?) {
         
         guard let mails = contact.emails else { return }
         
@@ -345,21 +327,21 @@ extension EmailPickerViewController {
     }
     
     
-    fileprivate func makeToken(forContact contact: APContact) -> CLToken? {
+    private func makeToken(forContact contact: APContact) -> CLToken? {
         guard let email = contact.userSelectedEmail else { return nil }
         let token = CLToken(displayText: email, context: contact)
         return token
     }
     
 
-    fileprivate func filterContacts(withSearchText text: String) {
+    private func filterContacts(withSearchText text: String) {
         let array = NSArray(array: self.contacts)
         
         let predicate = NSPredicate(format: "self.name.firstName contains[cd] %@ OR self.name.lastName contains[cd] %@", text, text)
         self.filteredContacts = array.filtered(using: predicate) as! [APContact]
     }
     
-    fileprivate func showNoAccessAlert(withError: NSError? = nil) {
+    private func showNoAccessAlert(withError: NSError? = nil) {
         let msg = "This app might not have permission to show your contacts.\nTo allow this app to show your contacts, tap Settings and make sure Contacts is switched on. (\(withError?.localizedDescription ?? ""))."
         
         let alert = UIAlertController(title: "Error Loading Contacts", message: msg, preferredStyle: .alert)
@@ -372,8 +354,7 @@ extension EmailPickerViewController {
         self.present(alert, animated: true, completion: nil)
     }
     
-    
-    fileprivate func loadContacts() {
+    private func loadContacts() {
         
         func showLoading() {
             tableView.isHidden = true
@@ -410,7 +391,22 @@ extension EmailPickerViewController {
 
 extension EmailPickerViewController {
     
-    fileprivate func addLayoutConstraints() {
+    private func setupView() {
+        view.backgroundColor = .white
+        
+        if let text = infoText , text.isEmpty == false {
+            view.addSubview(infoLabel)
+            infoLabel.text = text
+        }
+        
+        view.addSubview(tokenInputView)
+        view.addSubview(tableView)
+        view.insertSubview(loadingSpinner, aboveSubview: tableView)
+        
+        addLayoutConstraints()
+    }
+
+    private func addLayoutConstraints() {
         
         func addConstraintsForInfoLabel() {
             infoLabel.translatesAutoresizingMaskIntoConstraints = false
@@ -507,7 +503,7 @@ private extension APContact {
 //MARK: - Cell
 
 class EmailPickerCell: UITableViewCell {
-    static let height: CGFloat = 60
+    @objc static let height: CGFloat = 60
     
     @IBOutlet weak var thumbnailImageView: UIImageView! {
         didSet {
