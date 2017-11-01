@@ -8,7 +8,7 @@
 
 Pod::Spec.new do |s|
   s.name             = 'EmailPicker'
-  s.version          = '1.1.0'
+  s.version          = '1.2.0'
   s.summary          = 'A viewcontroller to select emails, written in Swift.'
 
   s.description      = <<-DESC
