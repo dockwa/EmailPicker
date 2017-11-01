@@ -37,23 +37,20 @@ extension ViewController {
 extension ViewController {
     
     @IBAction func selectContactsButtonTapped(_ sender: UIButton) {
-        
-        let handler: EmailPickerViewController.CompletionHandler = {(result) in
+        let textToShow = "To share your fun results with some friends, please type their emails or select their names from the list. Enjoy!"
+        let picker = EmailPickerViewController.emailPickerModal(textToShow, doneButtonTitle: "Send", completion: {(result) in
             switch result {
             case .cancelled(let vc):
                 vc.dismiss(animated: true) {
                     self.contactsLabel.text = "Cancelled!"
                 }
-
+                
             case .selected(let vc, let emails):
                 vc.dismiss(animated: true) {
                     self.contactsLabel.text = "Selected Emails: \(emails)"
                 }
             }
-        }
-        let textToShow = "To share your fun results with some friends, please type their emails or select their names from the list. Enjoy!"
-        let picker = EmailPickerViewController.emailPickerModal(textToShow, completion: handler)
-        
+        })
         present(picker, animated: true, completion: nil)
     }
     

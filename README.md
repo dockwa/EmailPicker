@@ -15,38 +15,28 @@ EmailPicker is a simple Swift 3 viewcontroller to easily select emails from a us
 To test out EmailPicker, just run `pod try EmailPicker` from your terminal, or clone the repo, and run `pod install` from the Example directory. 
 
 ## Usage
-Create a new instance using the class method 
-```swift
-class func emailPickerModal(infoText: String? = nil, completion: EmailPickerCompletion) -> UINavigationController
-```
-which returns a new EmailPicker instance wrapped in a UINavigationController to present modally. 
-
 Check out the example project for a usage example, like this: 
 
 ```swift
-let handler: EmailPickerCompletion = {(result) in
+let textToShow = "To share your fun results with some friends, please type their emails or select their names from the list. Enjoy!"
+let picker = EmailPickerViewController.emailPickerModal(textToShow, doneButtonTitle: "Send", completion: {(result) in
     switch result {
-    case .Cancelled(let vc):
-        vc.dismissViewControllerAnimated(true) {
+    case .cancelled(let vc):
+        vc.dismiss(animated: true) {
             self.contactsLabel.text = "Cancelled!"
         }
-        break
-    case .Selected(let vc, let emails):
-        vc.dismissViewControllerAnimated(true) {
+        
+    case .selected(let vc, let emails):
+        vc.dismiss(animated: true) {
             self.contactsLabel.text = "Selected Emails: \(emails)"
         }
-        break
     }
-}
-
-let textToShow = "To share your fun results with some friends, please type their emails or select their names from the list. Enjoy!"
-let picker = EmailPickerViewController.emailPickerModal(textToShow, completion: handler)
-        
-presentViewController(picker, animated: true, completion: nil)
+})
+present(picker, animated: true, completion: nil)
 ```
 
 ## Requirements
-Swift 3.0
+Swift 4.0
 
 This is a Swift project and uses Swift specific features such as associated values on enums, so you cannot use this pod in Objective-C.
 
