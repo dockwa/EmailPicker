@@ -19,7 +19,7 @@ Check out the example project for a usage example, like this:
 
 ```swift
 let textToShow = "To share your fun results with some friends, please type their emails or select their names from the list. Enjoy!"
-let picker = EmailPickerViewController.emailPickerModal(textToShow, doneButtonTitle: "Send", completion: {(result) in
+let picker = EmailPickerViewController(infoText: textToShow, doneButtonTitle: "Send", completion: {(result) in
     switch result {
     case .cancelled(let vc):
         vc.dismiss(animated: true) {
@@ -32,7 +32,7 @@ let picker = EmailPickerViewController.emailPickerModal(textToShow, doneButtonTi
         }
     }
 })
-present(picker, animated: true, completion: nil)
+present(UINavigationController(rootViewController: picker), animated: true, completion: nil)
 ```
 
 ## Requirements

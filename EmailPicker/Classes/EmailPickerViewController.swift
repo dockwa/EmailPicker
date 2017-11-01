@@ -60,6 +60,7 @@ open class EmailPickerViewController: UIViewController {
         label.adjustsFontSizeToFitWidth = true
         label.minimumScaleFactor = 0.5
         label.textAlignment = .center
+        label.font = UIFont.boldSystemFont(ofSize: 18)
         return label
     }()
     private var tokenHeightConstraint: NSLayoutConstraint?
@@ -85,6 +86,15 @@ open class EmailPickerViewController: UIViewController {
     
     //MARK: - Init
     
+    /**
+     This is the prefered method to create a new EmailPicker. Use this method and present modally.
+     
+     - parameter infoText:   This is the text that will appear at the top of the EmailPicker. Use this to provide additional instructions or context for your users.
+     - parameter doneButtonTitle: This is the title of the right bar button item, used to finish selecting emails.
+     - parameter completion: The completion closure to handle the selected emails.
+     
+     - returns: Returns an EmailPicker.
+     */
     public init(infoText: String? = nil, doneButtonTitle: String = "Done", completion: @escaping CompletionHandler) {
         super.init(nibName: nil, bundle: nil)
         self.completion = completion
@@ -101,27 +111,6 @@ open class EmailPickerViewController: UIViewController {
         super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
     }
 }
-
-
-//MARK: - Prefered Initialization 
-
-extension EmailPickerViewController {
-    
-    /**
-     This is the prefered method to create a new EmailPicker. Use this method and present modally.
-     
-     - parameter infoText:   This is the text that will appear at the top of the EmailPicker. Use this to provide additional instructions or context for your users.
-     - parameter completion: The completion closure to handle the selected emails.
-     
-     - returns: Returns an EmailPicker wrapped in a UINavigationController.
-     */
-    open class func emailPickerModal(_ infoText: String? = nil, doneButtonTitle: String = "Done", completion: @escaping CompletionHandler) -> UINavigationController {
-        let picker = EmailPickerViewController(infoText: infoText, completion: completion)
-        let nav = UINavigationController(rootViewController: picker)
-        return nav
-    }
-}
-
 
 //MARK: - UIKit
 
@@ -289,7 +278,6 @@ extension EmailPickerViewController {
     typealias SelectedEmailCompletion = (APContact) -> Void
    
     private func selectPreferedEmail(forContact contact: APContact, fromView: UIView?, completion: SelectedEmailCompletion?) {
-        
         guard let mails = contact.emails else { return }
         
         guard mails.count > 1 else {
@@ -324,6 +312,7 @@ extension EmailPickerViewController {
         }
         
         present(alert, animated: true, completion: nil)
+        alert.view.tintColor = view.tintColor
     }
     
     
@@ -393,7 +382,7 @@ extension EmailPickerViewController {
     
     private func setupView() {
         view.backgroundColor = .white
-        
+
         if let text = infoText , text.isEmpty == false {
             view.addSubview(infoLabel)
             infoLabel.text = text
