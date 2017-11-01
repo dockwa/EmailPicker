@@ -7,9 +7,9 @@
 #
 
 Pod::Spec.new do |s|
-  s.name             = "EmailPicker"
-  s.version          = "1.0.2"
-  s.summary          = "A viewcontroller to select emails, written in Swift 3."
+  s.name             = 'EmailPicker'
+  s.version          = '1.1.0'
+  s.summary          = 'A viewcontroller to select emails, written in Swift.'
 
   s.description      = <<-DESC
 
@@ -17,10 +17,10 @@ Pod::Spec.new do |s|
 
     DESC
 
-  s.homepage         = "https://github.com/dockwa/EmailPicker"
+  s.homepage         = 'https://github.com/dockwa/EmailPicker'
   s.license          = 'MIT'
-  s.author           = { "Christian Hatch" => "christianhatch@gmail.com" }
-  s.source           = { :git => "https://github.com/dockwa/EmailPicker.git", :tag => s.version.to_s }
+  s.author           = { 'Christian Hatch' => 'christianhatch@gmail.com' }
+  s.source           = { :git => 'https://github.com/dockwa/EmailPicker.git', :tag => s.version.to_s }
   s.social_media_url = 'https://twitter.com/commodoreftp'
 
   s.ios.deployment_target = '8.0'
@@ -29,6 +29,5 @@ Pod::Spec.new do |s|
 
   s.dependency 'CLTokenInputView'
   s.dependency 'APAddressBook'
-
 
 end
