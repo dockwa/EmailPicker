@@ -7,7 +7,7 @@
 
 ## What It Is
 
-EmailPicker is a simple Swift 3 viewcontroller to easily select emails from a user's contacts and/or enter them manually. Great for sharing content or inviting users.
+EmailPicker is a simple Swift viewcontroller to easily select emails from a user's contacts and/or enter them manually. Great for sharing content or inviting users.
 
 ## Example
 ![Sample](https://github.com/dockwa/EmailPicker/blob/master/Sample.gif)
