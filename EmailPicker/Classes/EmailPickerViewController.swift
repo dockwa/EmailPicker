@@ -144,7 +144,7 @@ extension EmailPickerViewController {
     
     @objc func done() {
         tokenInputView.tokenizeTextfieldText()
-        completion?(.selected(self, selectedContacts.flatMap{$0.userSelectedEmail}))
+        completion?(.selected(self, selectedContacts.compactMap { $0.userSelectedEmail }))
     }
     
 }
