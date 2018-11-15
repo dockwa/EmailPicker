@@ -49,7 +49,7 @@ open class EmailPickerViewController: UIViewController {
         return table
     }()
     private var loadingSpinner: UIActivityIndicatorView = {
-        let spinner = UIActivityIndicatorView(activityIndicatorStyle: .whiteLarge)
+        let spinner = UIActivityIndicatorView(style: .whiteLarge)
         spinner.color = .darkGray
         spinner.hidesWhenStopped = true
         return spinner
@@ -335,7 +335,7 @@ extension EmailPickerViewController {
         
         let alert = UIAlertController(title: "Error Loading Contacts", message: msg, preferredStyle: .alert)
         let action = UIAlertAction(title: "Settings", style: .default, handler: { (action) in
-            UIApplication.shared.openURL(URL(string: UIApplicationOpenSettingsURLString)!)
+            UIApplication.shared.openURL(URL(string: UIApplication.openSettingsURLString)!)
         })
         let cancel = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
         alert.addAction(action)
@@ -510,7 +510,7 @@ class EmailPickerCell: UITableViewCell {
 class InsetLabel: UILabel {
     override func drawText(in rect: CGRect) {
         let insets = UIEdgeInsets(top: 10, left: 10, bottom: 10, right: 10)
-        super.drawText(in: UIEdgeInsetsInsetRect(rect, insets))
+        super.drawText(in: rect.inset(by: insets))
     }
 }
 
