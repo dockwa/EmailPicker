@@ -87,7 +87,7 @@ open class EmailPickerViewController: UIViewController {
     //MARK: - Init
     
     /**
-     This is the prefered method to create a new EmailPicker. Use this method and present modally.
+     This is the a convenience method to create a new EmailPicker with default titleText. Use this method and present modally.
      
      - parameter infoText:   This is the text that will appear at the top of the EmailPicker. Use this to provide additional instructions or context for your users.
      - parameter doneButtonTitle: This is the title of the right bar button item, used to finish selecting emails.
@@ -95,12 +95,25 @@ open class EmailPickerViewController: UIViewController {
      
      - returns: Returns an EmailPicker.
      */
-    public init(infoText: String? = nil, doneButtonTitle: String = "Done", completion: @escaping CompletionHandler) {
+    public convenience init(infoText: String? = nil, doneButtonTitle: String = "Done", completion: @escaping CompletionHandler) {
+        self.init(titleText:"Select Contacts", infoText: infoText, doneButtonTitle: doneButtonTitle, completion: completion)
+    }
+    /**
+     This is the prefered method to create a new EmailPicker. Use this method and present modally.
+     
+     - parameter titleText: This is the text that will appear in the title bar
+     - parameter infoText:   This is the text that will appear at the top of the EmailPicker. Use this to provide additional instructions or context for your users.
+     - parameter doneButtonTitle: This is the title of the right bar button item, used to finish selecting emails.
+     - parameter completion: The completion closure to handle the selected emails.
+     
+     - returns: Returns an EmailPicker.
+     */
+    public init(titleText: String? = nil, infoText: String? = nil, doneButtonTitle: String = "Done", completion: @escaping CompletionHandler) {
         super.init(nibName: nil, bundle: nil)
         self.completion = completion
         self.infoText = infoText
         
-        navigationItem.title = "Select Contacts"
+        navigationItem.title = titleText
         navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .cancel, target: self, action: #selector(self.cancel))
         navigationItem.rightBarButtonItem = UIBarButtonItem(title: doneButtonTitle, style: .done, target: self, action: #selector(self.done))
     }
