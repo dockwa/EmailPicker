@@ -1,10 +1,9 @@
-
-"EnterAnEmailAddress" = "Enter an email address"
-"SelectContacts" = "Select Contacts"
-"Done" = "Done"
-"Cancel" = "Cancel"
-"ChooseEmail" = "Choose Email"
-"WhichEmailWouldYouLikeToUse" = "Which email would you like to use?"
-"ThisAppMightNotHavePermissionToShowYourContacts" = "This app might not have permission to show your contacts.\nTo allow this app to show your contacts, tap Settings and make sure Contacts is switched on."
-"ErrorLoadingContacts" = "Error Loading Contacts"
-"Settings" = "Settings"
+"EnterAnEmailAddress" = "Enter an email address";
+"SelectContacts" = "Select Contacts";
+"Done" = "Done";
+"Cancel" = "Cancel";
+"ChooseEmail" = "Choose Email";
+"WhichEmailWouldYouLikeToUse" = "Which email would you like to use?";
+"ThisAppMightNotHavePermissionToShowYourContacts" = "This app might not have permission to show your contacts.\nTo allow this app to show your contacts, tap Settings and make sure Contacts is switched on.";
+"ErrorLoadingContacts" = "Error Loading Contacts";
+"Settings" = "Settings";

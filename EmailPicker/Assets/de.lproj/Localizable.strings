@@ -1,10 +1,9 @@
-
-"EnterAnEmailAddress" = "Gib eine E-Mailadresse ein"
-"SelectContacts" = "Kontakte wählen"
-"Done" = "Fertig"
-"Cancel" = "Abbrechen"
-"ChooseEmail" = "E-Mailadresse wählen"
-"WhichEmailWouldYouLikeToUse" = "Welche E-Mailadresse möchtest du auswählen?"
-"ThisAppMightNotHavePermissionToShowYourContacts" = "Diese App scheint keine Berechtigung zum Anzeigen deiner Kontakte zu besitzen.\nUm die Berechtigung für deine Kontakte zu erteilen wechsle in die Systemeinstellungen und stelle sicher, dass diese App auf deine Kontakte zugreifen darf."
-"ErrorLoadingContacts" = "Fehler beim Laden deiner Kontakte"
-"Settings" = "Einstellungen"
+"EnterAnEmailAddress" = "Gib eine E-Mailadresse ein";
+"SelectContacts" = "Kontakte wählen";
+"Done" = "Fertig";
+"Cancel" = "Abbrechen";
+"ChooseEmail" = "E-Mailadresse wählen";
+"WhichEmailWouldYouLikeToUse" = "Welche E-Mailadresse möchtest du auswählen?";
+"ThisAppMightNotHavePermissionToShowYourContacts" = "Diese App scheint keine Berechtigung zum Anzeigen deiner Kontakte zu besitzen.\nUm die Berechtigung für deine Kontakte zu erteilen wechsle in die Systemeinstellungen und stelle sicher, dass diese App auf deine Kontakte zugreifen darf.";
+"ErrorLoadingContacts" = "Fehler beim Laden deiner Kontakte";
+"Settings" = "Einstellungen";
