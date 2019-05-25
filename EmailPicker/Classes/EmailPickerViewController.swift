@@ -33,7 +33,7 @@ open class EmailPickerViewController: UIViewController {
     private lazy var tokenInputView: CLTokenInputView = {
         let view = CLTokenInputView()
         view.delegate = self
-        view.placeholderText = NSLocalizedString("EnterAnEmailAddress", comment:"")
+        view.placeholderText = NSLocalizedString("EnterAnEmailAddress", value: "E-Mail", comment:"")
         view.drawBottomBorder = true
         view.tokenizationCharacters = [" ", ","]
         view.backgroundColor = .white
