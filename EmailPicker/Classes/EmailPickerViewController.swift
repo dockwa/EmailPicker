@@ -175,7 +175,7 @@ extension EmailPickerViewController: CLTokenInputViewDelegate {
     
     public func tokenInputView(_ view: CLTokenInputView, didRemove token: CLToken) {
         if let contact = token.context as? APContact {
-            if let idx = selectedContacts.index(of: contact) {
+            if let idx = selectedContacts.firstIndex(of: contact) {
                 selectedContacts.remove(at: idx)
             }
             tableView.reloadData()
@@ -252,7 +252,7 @@ extension EmailPickerViewController: UITableViewDelegate {
         let contact = filteredContacts[indexPath.row]
         
         if selectedContacts.contains(contact) { //we already have it, lets deselect it
-            if let idx = selectedContacts.index(of: contact) {
+            if let idx = selectedContacts.firstIndex(of: contact) {
                 selectedContacts.remove(at: idx)
             }
             tableView.reloadData()
