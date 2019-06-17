@@ -33,7 +33,7 @@ open class EmailPickerViewController: UIViewController {
     private lazy var tokenInputView: CLTokenInputView = {
         let view = CLTokenInputView()
         view.delegate = self
-        view.placeholderText = NSLocalizedString("EnterAnEmailAddress", tableName: "EmailPickerLocalizable", value: "E-Mail", comment:"")
+        view.placeholderText = NSLocalizedString("EnterAnEmailAddress", tableName: "EmailPickerLocalizable", bundle: Bundle(for: EmailPickerViewController.self), value: "E-Mail", comment:"")
         view.drawBottomBorder = true
         view.tokenizationCharacters = [" ", ","]
         view.backgroundColor = .white
@@ -95,8 +95,8 @@ open class EmailPickerViewController: UIViewController {
      
      - returns: Returns an EmailPicker.
      */
-    public convenience init(infoText: String? = nil, doneButtonTitle: String = NSLocalizedString("Done", tableName: "EmailPickerLocalizable", comment:""), completion: @escaping CompletionHandler) {
-        self.init(titleText:NSLocalizedString("SelectContacts", tableName: "EmailPickerLocalizable", comment:""), infoText: infoText, doneButtonTitle: doneButtonTitle, completion: completion)
+    public convenience init(infoText: String? = nil, doneButtonTitle: String = NSLocalizedString("Done", tableName: "EmailPickerLocalizable", bundle: Bundle(for: EmailPickerViewController.self), comment:""), completion: @escaping CompletionHandler) {
+        self.init(titleText:NSLocalizedString("SelectContacts", tableName: "EmailPickerLocalizable", bundle: Bundle(for: EmailPickerViewController.self), comment:""), infoText: infoText, doneButtonTitle: doneButtonTitle, completion: completion)
     }
     /**
      This is the prefered method to create a new EmailPicker. Use this method and present modally.
@@ -108,7 +108,7 @@ open class EmailPickerViewController: UIViewController {
      
      - returns: Returns an EmailPicker.
      */
-    public init(titleText: String? = nil, infoText: String? = nil, doneButtonTitle: String = NSLocalizedString("Done", tableName: "EmailPickerLocalizable", comment:""), completion: @escaping CompletionHandler) {
+    public init(titleText: String? = nil, infoText: String? = nil, doneButtonTitle: String = NSLocalizedString("Done", tableName: "EmailPickerLocalizable", bundle: Bundle(for: EmailPickerViewController.self), comment:""), completion: @escaping CompletionHandler) {
         super.init(nibName: nil, bundle: nil)
         self.completion = completion
         self.infoText = infoText
@@ -307,10 +307,10 @@ extension EmailPickerViewController {
             })
             return action
         })
-        actions.append(UIAlertAction(title: NSLocalizedString("Cancel", tableName: "EmailPickerLocalizable", comment:""), style: .cancel, handler: nil))
+        actions.append(UIAlertAction(title: NSLocalizedString("Cancel", tableName: "EmailPickerLocalizable", bundle: Bundle(for: EmailPickerViewController.self), comment:""), style: .cancel, handler: nil))
         
         //create alert
-        let alert = UIAlertController(title: NSLocalizedString("ChooseEmail", tableName: "EmailPickerLocalizable", comment:""), message: NSLocalizedString("WhichEmailWouldYouLikeToUse", tableName: "EmailPickerLocalizable", comment:""), preferredStyle: .actionSheet)
+        let alert = UIAlertController(title: NSLocalizedString("ChooseEmail", tableName: "EmailPickerLocalizable", bundle: Bundle(for: EmailPickerViewController.self), comment:""), message: NSLocalizedString("WhichEmailWouldYouLikeToUse", tableName: "EmailPickerLocalizable", bundle: Bundle(for: EmailPickerViewController.self), comment:""), preferredStyle: .actionSheet)
         for act in actions {
             alert.addAction(act)
         }
@@ -344,13 +344,13 @@ extension EmailPickerViewController {
     }
     
     private func showNoAccessAlert(withError: NSError? = nil) {
-        let msg = NSLocalizedString("ThisAppMightNotHavePermissionToShowYourContacts", tableName: "EmailPickerLocalizable", comment:"") + " (\(withError?.localizedDescription ?? ""))."
+        let msg = NSLocalizedString("ThisAppMightNotHavePermissionToShowYourContacts", tableName: "EmailPickerLocalizable", bundle: Bundle(for: EmailPickerViewController.self), comment:"") + " (\(withError?.localizedDescription ?? ""))."
         
-        let alert = UIAlertController(title: NSLocalizedString("ErrorLoadingContacts", tableName: "EmailPickerLocalizable", comment:""), message: msg, preferredStyle: .alert)
-        let action = UIAlertAction(title: NSLocalizedString("Settings", tableName: "EmailPickerLocalizable", comment:""), style: .default, handler: { (action) in
+        let alert = UIAlertController(title: NSLocalizedString("ErrorLoadingContacts", tableName: "EmailPickerLocalizable", bundle: Bundle(for: EmailPickerViewController.self), comment:""), message: msg, preferredStyle: .alert)
+        let action = UIAlertAction(title: NSLocalizedString("Settings", tableName: "EmailPickerLocalizable", bundle: Bundle(for: EmailPickerViewController.self), comment:""), style: .default, handler: { (action) in
             UIApplication.shared.openURL(URL(string: UIApplication.openSettingsURLString)!)
         })
-        let cancel = UIAlertAction(title: NSLocalizedString("Cancel", tableName: "EmailPickerLocalizable", comment:""), style: .cancel, handler: nil)
+        let cancel = UIAlertAction(title: NSLocalizedString("Cancel", tableName: "EmailPickerLocalizable", bundle: Bundle(for: EmailPickerViewController.self), comment:""), style: .cancel, handler: nil)
         alert.addAction(action)
         alert.addAction(cancel)
         self.present(alert, animated: true, completion: nil)
