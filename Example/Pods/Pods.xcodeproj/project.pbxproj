@@ -163,8 +163,8 @@
 		5459828838DE87DAFAA53DAC5FFAC653 /* APTypes.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = APTypes.h; path = Pod/Core/Public/Models/APTypes.h; sourceTree = "<group>"; };
 		5497F7BB2DCD4B0A373808E021BA65FB /* CLBackspaceDetectingTextField.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = CLBackspaceDetectingTextField.m; path = CLTokenInputView/CLTokenInputView/CLBackspaceDetectingTextField.m; sourceTree = "<group>"; };
 		59754D5B3975D4DDED060D34163264AA /* APJob.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = APJob.h; path = Pod/Core/Public/Models/APJob.h; sourceTree = "<group>"; };
-		5B7C0E5222800823008FF508 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
-		5B7C0E5422800828008FF508 /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/Localizable.strings; sourceTree = "<group>"; };
+		5B7C0E5222800823008FF508 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/EmailPickerLocalizable.strings; sourceTree = "<group>"; };
+		5B7C0E5422800828008FF508 /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/EmailPickerLocalizable.strings; sourceTree = "<group>"; };
 		5C6684FF33E52882F4AC6394BE8BA221 /* APSocialServiceHelper.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = APSocialServiceHelper.h; path = Pod/Core/Private/Helpers/APSocialServiceHelper.h; sourceTree = "<group>"; };
 		5C801AAC6C619ECF95E0F645871460CC /* APSource.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = APSource.m; path = Pod/Core/Public/Models/APSource.m; sourceTree = "<group>"; };
 		60DC4828EE4AC56433FFF2B737AB764B /* APContactBuilder.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = APContactBuilder.m; path = Pod/Core/Private/Builders/APContactBuilder.m; sourceTree = "<group>"; };
@@ -326,7 +326,7 @@
 				292EE7311176BD2CBD44B1908B1B5EDF /* EmailPicker-prefix.pch */,
 				A8C4B3C5492FF91D12DAA2C9427EB960 /* EmailPicker-umbrella.h */,
 				29C4A76447CC46D2F2F41F9792E2F652 /* Info.plist */,
-				5B7C0E5322800823008FF508 /* Localizable.strings */,
+				5B7C0E5322800823008FF508 /* EmailPickerLocalizable.strings */,
 			);
 			name = "Support Files";
 			path = "Example/Pods/Target Support Files/EmailPicker";
@@ -729,6 +729,7 @@
 			knownRegions = (
 				en,
 				de,
+				Base,
 			);
 			mainGroup = 7DB346D0F39D3F0E887471402A8071AB;
 			productRefGroup = B4A3F6F182005AFD9E507EDFF2740820 /* Products */;
@@ -850,13 +851,13 @@
 /* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
-		5B7C0E5322800823008FF508 /* Localizable.strings */ = {
+		5B7C0E5322800823008FF508 /* EmailPickerLocalizable.strings */ = {
 			isa = PBXVariantGroup;
 			children = (
 				5B7C0E5222800823008FF508 /* en */,
 				5B7C0E5422800828008FF508 /* de */,
 			);
-			name = Localizable.strings;
+			name = EmailPickerLocalizable.strings;
 			path = ../../../../EmailPicker/Assets;
 			sourceTree = "<group>";
 		};
