@@ -18,12 +18,6 @@ class ViewController: UIViewController {
     }
     @IBOutlet weak var selectContactsButton: UIButton!
     
-}
-
-//MARK: - IBAction
-
-extension ViewController {
-    
     @IBAction func selectContactsButtonTapped(_ sender: UIButton) {
         let textToShow = "To share your fun results with some friends, please type their emails or select their names from the list. Enjoy!"
         let picker = EmailPickerViewController(infoText: textToShow, doneButtonTitle: "Send", completion: {(result) in
@@ -42,5 +36,4 @@ extension ViewController {
         picker.view.tintColor = .red
         present(UINavigationController(rootViewController: picker), animated: true, completion: nil)
     }
-    
 }

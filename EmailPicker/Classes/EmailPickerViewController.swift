@@ -8,8 +8,7 @@
 
 import UIKit
 import CLTokenInputView
-import APAddressBook
-
+import Contacts
 
 open class EmailPickerViewController: UIViewController {
 
@@ -28,7 +27,6 @@ open class EmailPickerViewController: UIViewController {
     
     public typealias CompletionHandler = (Result) -> Void
 
-    
     
     private lazy var tokenInputView: CLTokenInputView = {
         let view = CLTokenInputView()
@@ -65,21 +63,21 @@ open class EmailPickerViewController: UIViewController {
     }()
     private var tokenHeightConstraint: NSLayoutConstraint?
 
-    private lazy var addressBook: APAddressBook = {
-        let book = APAddressBook()
-        book.fieldsMask = [.name, .thumbnail, .emailsOnly]
-        book.sortDescriptors = [NSSortDescriptor(key: "name.firstName", ascending: true),
-                                NSSortDescriptor(key: "name.lastName", ascending: true)]
-        book.filterBlock = {(contact: APContact!) -> Bool in
-            guard let emails = contact.emails , emails.count > 0 else { return false }
-            return true
-        }
-        return book
-    }()
+//    private lazy var addressBook: APAddressBook = {
+//        let book = APAddressBook()
+//        book.fieldsMask = [.name, .thumbnail, .emailsOnly]
+//        book.sortDescriptors = [NSSortDescriptor(key: "name.firstName", ascending: true),
+//                                NSSortDescriptor(key: "name.lastName", ascending: true)]
+//        book.filterBlock = {(contact: APContact!) -> Bool in
+//            guard let emails = contact.emails , emails.count > 0 else { return false }
+//            return true
+//        }
+//        return book
+//    }()
     
-    private var contacts: [APContact] = []
-    private var filteredContacts: [APContact] = []
-    private var selectedContacts: [APContact] = []
+    private var contacts: [CNContact] = []
+    private var filteredContacts: [CNContact] = []
+    private var selectedContacts: [CNContact] = []
     private var completion: CompletionHandler?
     private var infoText: String?
     
@@ -123,7 +121,6 @@ extension EmailPickerViewController {
         loadContacts()
     }
     
-    
     override open func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         
@@ -136,7 +133,6 @@ extension EmailPickerViewController {
         super.viewWillDisappear(animated)
         tokenInputView.endEditing()
     }
-    
 
     @objc func cancel() {
         completion?(.cancelled(self))
@@ -146,7 +142,6 @@ extension EmailPickerViewController {
         tokenInputView.tokenizeTextfieldText()
         completion?(.selected(self, selectedContacts.compactMap { $0.userSelectedEmail }))
     }
-    
 }
 
 
@@ -159,8 +154,7 @@ extension EmailPickerViewController: CLTokenInputViewDelegate {
         
         if text == "" {
             filteredContacts = contacts
-        }
-        else {
+        } else {
             filterContacts(withSearchText: text)
         }
         
@@ -168,13 +162,13 @@ extension EmailPickerViewController: CLTokenInputViewDelegate {
     }
     
     public func tokenInputView(_ view: CLTokenInputView, didAdd token: CLToken) {
-        if let contact = token.context as? APContact {
+        if let contact = token.context as? CNContact {
             selectedContacts.append(contact)
         }
     }
     
     public func tokenInputView(_ view: CLTokenInputView, didRemove token: CLToken) {
-        if let contact = token.context as? APContact {
+        if let contact = token.context as? CNContact {
             if let idx = selectedContacts.firstIndex(of: contact) {
                 selectedContacts.remove(at: idx)
             }
@@ -185,12 +179,10 @@ extension EmailPickerViewController: CLTokenInputViewDelegate {
     public func tokenInputView(_ view: CLTokenInputView, tokenForText text: String) -> CLToken? {
         if filteredContacts.count > 0 {
             guard let contact = filteredContacts.first else { return nil }
-            
-            selectPreferedEmail(forContact: contact, fromView: view, completion: nil)
-        }
-        else { //lets create a token
+            selectPreferedEmail(for: contact, fromView: view, completion: nil)
+        } else { //lets create a token
             if text.isEmail {
-                let contact = APContact()
+                let contact = CNContact()
                 contact.userSelectedEmail = text
                 
                 let token = CLToken(displayText: contact.userSelectedEmail!, context: contact)
@@ -234,13 +226,11 @@ extension EmailPickerViewController: UITableViewDataSource {
         let isSelected = selectedContacts.contains(contact)
 
         cell.thumbnailImageView.image = contact.thumbnail
-        cell.label.text = contact.name?.compositeName
+        cell.label.text = "\(contact.givenName) \(contact.familyName)"
         cell.accessoryType = isSelected ? .checkmark : .none
-        
         return cell
     }
 }
-
 
 //MARK: - TableView Delegate
 
@@ -248,7 +238,6 @@ extension EmailPickerViewController: UITableViewDelegate {
 
     public func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
-        
         let contact = filteredContacts[indexPath.row]
         
         if selectedContacts.contains(contact) { //we already have it, lets deselect it
@@ -257,27 +246,24 @@ extension EmailPickerViewController: UITableViewDelegate {
             }
             tableView.reloadData()
             
-            guard let token = makeToken(forContact: contact) else { return }
+            guard let token = makeToken(contact: contact) else { return }
             tokenInputView.remove(token)
-        }
-        else { //we don't have it, lets select it
-            selectPreferedEmail(forContact: contact, fromView: tableView.cellForRow(at: indexPath)?.contentView, completion: { (contact) -> Void in
-                guard let token = self.makeToken(forContact: contact) else { return }
+        } else { //we don't have it, lets select it
+            selectPreferedEmail(for: contact, fromView: tableView.cellForRow(at: indexPath)?.contentView, completion: { (contact) -> Void in
+                guard let token = self.makeToken(contact: contact) else { return }
                 self.tokenInputView.add(token)
             })
         }
     }
 }
 
-
-
 //MARK: - Contact Helpers
 
 extension EmailPickerViewController {
     
-    typealias SelectedEmailCompletion = (APContact) -> Void
+    typealias SelectedEmailCompletion = (CNContact) -> Void
    
-    private func selectPreferedEmail(forContact contact: APContact, fromView: UIView?, completion: SelectedEmailCompletion?) {
+    private func selectPreferedEmail(for contact: CNContact, fromView: UIView?, completion: SelectedEmailCompletion?) {
         guard let mails = contact.emails else { return }
         
         guard mails.count > 1 else {
@@ -315,19 +301,17 @@ extension EmailPickerViewController {
         alert.view.tintColor = view.tintColor
     }
     
-    
-    private func makeToken(forContact contact: APContact) -> CLToken? {
+    private func makeToken(contact: CNContact) -> CLToken? {
         guard let email = contact.userSelectedEmail else { return nil }
         let token = CLToken(displayText: email, context: contact)
         return token
     }
     
-
     private func filterContacts(withSearchText text: String) {
         let array = NSArray(array: self.contacts)
         
         let predicate = NSPredicate(format: "self.name.firstName contains[cd] %@ OR self.name.lastName contains[cd] %@", text, text)
-        self.filteredContacts = array.filtered(using: predicate) as! [APContact]
+        self.filteredContacts = array.filtered(using: predicate) as! [CNContact]
     }
     
     private func showNoAccessAlert(withError: NSError? = nil) {
@@ -335,7 +319,7 @@ extension EmailPickerViewController {
         
         let alert = UIAlertController(title: "Error Loading Contacts", message: msg, preferredStyle: .alert)
         let action = UIAlertAction(title: "Settings", style: .default, handler: { (action) in
-            UIApplication.shared.openURL(URL(string: UIApplication.openSettingsURLString)!)
+            UIApplication.shared.open(URL(string: UIApplication.openSettingsURLString)!, options: [:], completionHandler: nil)
         })
         let cancel = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
         alert.addAction(action)
@@ -344,13 +328,11 @@ extension EmailPickerViewController {
     }
     
     private func loadContacts() {
-        
         func showLoading() {
             tableView.isHidden = true
             tokenInputView.isUserInteractionEnabled = false
             loadingSpinner.startAnimating()
         }
-        
         func finishLoading() {
             tableView.isHidden = false
             loadingSpinner.stopAnimating()
@@ -358,23 +340,55 @@ extension EmailPickerViewController {
         }
         
         showLoading()
-        addressBook.loadContacts { (contacts, error) -> Void in
-            finishLoading()
-            
-            if let contacts = contacts {
-                self.contacts = contacts
-                self.filteredContacts = self.contacts
-                self.tableView.reloadData()
-            }
-            else if let error = error {
-                self.showNoAccessAlert(withError: error as NSError?)
+        
+        
+        
+        let contactStore = CNContactStore()
+        let keysToFetch: [CNKeyDescriptor] = [
+            CNContactGivenNameKey as CNKeyDescriptor,
+            CNContactFamilyNameKey as CNKeyDescriptor,
+            CNContactEmailAddressesKey as CNKeyDescriptor,
+            CNContactPhoneNumbersKey as CNKeyDescriptor,
+            CNContactImageDataAvailableKey as CNKeyDescriptor,
+            CNContactThumbnailImageDataKey as CNKeyDescriptor]
+        
+        // Get all the containers
+        var allContainers: [CNContainer] = []
+        do {
+            allContainers = try contactStore.containers(matching: nil)
+        } catch {
+            print("Error fetching containers")
+        }
+        
+        var results: [CNContact] = []
+        // Iterate all containers and append their contacts to our results array
+        for container in allContainers {
+            let fetchPredicate = CNContact.predicateForContactsInContainer(withIdentifier: container.identifier)
+            do {
+                let containerResults = try contactStore.unifiedContacts(matching: fetchPredicate, keysToFetch: keysToFetch)
+                results += containerResults
+            } catch {
+                print("Error fetching results for container")
             }
         }
+        self.contacts = results
+        self.filteredContacts = self.contacts
+        self.tableView.reloadData()
 
+        
+//        addressBook.loadContacts { (contacts, error) -> Void in
+//            finishLoading()
+//
+//            if let contacts = contacts {
+//                self.contacts = contacts
+//                self.filteredContacts = self.contacts
+//                self.tableView.reloadData()
+//            } else if let error = error {
+//                self.showNoAccessAlert(withError: error as NSError?)
+//            }
+//        }
     }
-    
 }
-
 
 //MARK: - Layout
 
@@ -469,13 +483,28 @@ extension EmailPickerViewController {
 
 private extension String {
     var isEmail: Bool {
-        let emailRegex = "[A-Z0-9a-z._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,6}"
-        return NSPredicate(format: "SELF MATCHES %@", emailRegex).evaluate(with: self)
+        return emailAddresses().count == 1
+    }
+    
+    func emailAddresses() -> [String] {
+        var addresses = [String]()
+        if let detector = try? NSDataDetector(types: NSTextCheckingResult.CheckingType.link.rawValue) {
+            let matches = detector.matches(in: self, options: [], range: NSMakeRange(0, self.count))
+            for match in matches {
+                if let matchURL = match.url,
+                    let matchURLComponents = URLComponents(url: matchURL, resolvingAgainstBaseURL: false),
+                    matchURLComponents.scheme == "mailto" {
+                    let address = matchURLComponents.path
+                    addresses.append(String(address))
+                }
+            }
+        }
+        return addresses
     }
 }
 
 private var selectedEmailKey: UInt8 = 0
-private extension APContact {
+private extension CNContact {
     var userSelectedEmail: String? {
         get {
             return objc_getAssociatedObject(self, &selectedEmailKey) as? String
@@ -485,9 +514,6 @@ private extension APContact {
         }
     }
 }
-
-
-
 
 //MARK: - Cell
 
@@ -500,10 +526,7 @@ class EmailPickerCell: UITableViewCell {
         }
     }
     @IBOutlet weak var label: UILabel!
-    
 }
-
-
 
 //MARK: - UILabel Inset Subclass 
 

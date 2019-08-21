@@ -8,7 +8,7 @@
 
 Pod::Spec.new do |s|
   s.name             = 'EmailPicker'
-  s.version          = '1.5.0'
+  s.version          = '2.0.0'
   s.summary          = 'A viewcontroller to select emails, written in Swift.'
 
   s.description      = <<-DESC
@@ -24,11 +24,9 @@ Pod::Spec.new do |s|
   s.social_media_url = 'https://twitter.com/commodoreftp'
 
   s.swift_version = '5.0'
-  s.ios.deployment_target = '8.0'
+  s.ios.deployment_target = '10.3'
 
   s.source_files = 'EmailPicker/Classes/**/*'
 
   s.dependency 'CLTokenInputView'
-  s.dependency 'APAddressBook'
-
 end

@@ -36,9 +36,12 @@ present(UINavigationController(rootViewController: picker), animated: true, comp
 ```
 
 ## Requirements
-Swift 4.0
+Swift 5.0
+iOS 10.3
 
 This is a Swift project and uses Swift specific features such as associated values on enums, so you cannot use this pod in Objective-C.
+
+If you need backwards compatibility to iOS 8.0, use version 1.4.0 of this library.  
 
 ## Installation
 
