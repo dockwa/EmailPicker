@@ -62,18 +62,6 @@ open class EmailPickerViewController: UIViewController {
         return label
     }()
     private var tokenHeightConstraint: NSLayoutConstraint?
-
-//    private lazy var addressBook: APAddressBook = {
-//        let book = APAddressBook()
-//        book.fieldsMask = [.name, .thumbnail, .emailsOnly]
-//        book.sortDescriptors = [NSSortDescriptor(key: "name.firstName", ascending: true),
-//                                NSSortDescriptor(key: "name.lastName", ascending: true)]
-//        book.filterBlock = {(contact: APContact!) -> Bool in
-//            guard let emails = contact.emails , emails.count > 0 else { return false }
-//            return true
-//        }
-//        return book
-//    }()
     
     private var contacts: [CNContact] = []
     private var filteredContacts: [CNContact] = []
