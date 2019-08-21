@@ -205,8 +205,7 @@ extension EmailPickerViewController: CLTokenInputViewDelegate {
     }
 }
 
-
-//MARK: - TableView DataSource
+// MARK: - TableView DataSource
 
 extension EmailPickerViewController: UITableViewDataSource {
     
@@ -271,7 +270,6 @@ extension EmailPickerViewController {
             return
         }
     
-        //make actions
         var actions = mails.map({ (email) -> UIAlertAction in
             let action = UIAlertAction(title: email.address, style: .default, handler: { (action) -> Void in
                 contact.userSelectedEmail = action.title
@@ -280,8 +278,6 @@ extension EmailPickerViewController {
             return action
         })
         actions.append(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
-        
-        //create alert
         let alert = UIAlertController(title: "Choose Email", message: "Which email would you like to use?", preferredStyle: .actionSheet)
         for act in actions {
             alert.addAction(act)
@@ -370,22 +366,6 @@ extension EmailPickerViewController {
                 print("Error fetching results for container")
             }
         }
-        self.contacts = results
-        self.filteredContacts = self.contacts
-        self.tableView.reloadData()
-
-        
-//        addressBook.loadContacts { (contacts, error) -> Void in
-//            finishLoading()
-//
-//            if let contacts = contacts {
-//                self.contacts = contacts
-//                self.filteredContacts = self.contacts
-//                self.tableView.reloadData()
-//            } else if let error = error {
-//                self.showNoAccessAlert(withError: error as NSError?)
-//            }
-//        }
     }
 }
 
