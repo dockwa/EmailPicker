@@ -278,12 +278,15 @@ extension EmailPickerViewController {
             return action
         })
         actions.append(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
+
         let alert = UIAlertController(title: "Choose Email", message: "Which email would you like to use?", preferredStyle: .actionSheet)
         actions.forEach { alert.addAction($0) } 
 
         if let fromView = fromView {
             alert.popoverPresentationController?.sourceView = fromView
             alert.popoverPresentationController?.permittedArrowDirections = [.up, .down]
+        } else {
+            alert.popoverPresentationController?.sourceView = view
         }
 
         present(alert, animated: true, completion: nil)
