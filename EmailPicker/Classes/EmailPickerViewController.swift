@@ -21,11 +21,11 @@ open class EmailPickerViewController: UIViewController {
      - Cancelled: The EmailPicker was cancelled, so no contacts were selected. Has the EmailPickerViewController to dismiss it.
      */
     public enum Result {
-        case selected(EmailPickerViewController, [Email])
-        case cancelled(EmailPickerViewController)
+        case selected([Email])
+        case cancelled
     }
     
-    public typealias Completion = (Result) -> Void
+    public typealias Completion = (Result, EmailPickerViewController) -> Void
 
     
     // MARK: - Properties
@@ -136,12 +136,12 @@ extension EmailPickerViewController {
     }
 
     @objc private func cancel() {
-        completion?(.cancelled(self))
+        completion(.cancelled, self)
     }
     
     @objc private func done() {
         tokenInputView.tokenizeTextfieldText()
-        completion?(.selected(self, selectedContacts.compactMap { $0.userSelectedEmail }))
+        completion(.selected(selectedContacts.compactMap { $0.userSelectedEmail }), self)
     }
 }
 
