@@ -244,11 +244,11 @@ extension EmailPickerViewController: UITableViewDelegate {
             }
             tableView.reloadData()
             
-            guard let token = makeToken(contact: contact) else { return }
+            guard let token = CLToken(contact: contact) else { return }
             tokenInputView.remove(token)
         } else { //we don't have it, lets select it
-            selectPreferedEmail(for: contact, fromView: tableView.cellForRow(at: indexPath)?.contentView, completion: { (contact) -> Void in
-                guard let token = self.makeToken(contact: contact) else { return }
+            selectPreferedEmail(for: contact, fromView: tableView.cellForRow(at: indexPath)?.contentView, completion: { contact in
+                guard let token = CLToken(contact: contact) else { return }
                 self.tokenInputView.add(token)
             })
         }
@@ -294,12 +294,6 @@ extension EmailPickerViewController {
         
         present(alert, animated: true, completion: nil)
         alert.view.tintColor = view.tintColor
-    }
-    
-    private func makeToken(contact: CNContact) -> CLToken? {
-        guard let email = contact.userSelectedEmail else { return nil }
-        let token = CLToken(displayText: email, context: contact)
-        return token
     }
     
     private func filterContacts(withSearchText text: String) {
@@ -511,6 +505,12 @@ private extension CNContactStore {
     }
 }
 
+private extension CLToken {
+    convenience init?(contact: CNContact) {
+        guard let email = contact.userSelectedEmail else { return nil }
+        self.init(displayText: email, context: contact)
+    }
+}
 
 
 
