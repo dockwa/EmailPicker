@@ -512,6 +512,24 @@ private extension CLToken {
     }
 }
 
+private extension String {
+    var isEmail: Bool {
+        return emailAddresses().count == 1
+    }
+    
+    func emailAddresses() -> [String] {
+        guard let detector = try? NSDataDetector(types: NSTextCheckingResult.CheckingType.link.rawValue) else { return [] }
+        let matches = detector.matches(in: self, options: [], range: NSRange(location: 0, length: count))
+        return matches.compactMap { (match) -> String? in
+            guard let matchURL = match.url,
+                  let matchURLComponents = URLComponents(url: matchURL, resolvingAgainstBaseURL: false),
+                  matchURLComponents.scheme == "mailto"
+            else { return nil }
+            
+            return matchURLComponents.path
+        }
+    }
+}
 
 
 
