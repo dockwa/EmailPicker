@@ -68,8 +68,8 @@ open class EmailPickerViewController: UIViewController {
     private var contacts: [CNContact] = []
     private var filteredContacts: [CNContact] = []
     private var selectedContacts: [CNContact] = []
-    private var completion: Completion?
-    private var infoText: String?
+    private let completion: Completion
+    private let infoText: String?
     
     
     // MARK: - Init
@@ -84,9 +84,9 @@ open class EmailPickerViewController: UIViewController {
      - returns: Returns an EmailPicker.
      */
     public init(infoText: String? = nil, doneButtonTitle: String = "Done", completion: @escaping Completion) {
-        super.init(nibName: nil, bundle: nil)
         self.completion = completion
         self.infoText = infoText
+        super.init(nibName: nil, bundle: nil)
         
         navigationItem.title = "Select Contacts"
         navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .cancel, target: self, action: #selector(cancel))
@@ -104,11 +104,8 @@ open class EmailPickerViewController: UIViewController {
         
         addLayoutConstraints()
     }
-    required public init?(coder aDecoder: NSCoder) {
-        super.init(coder: aDecoder)
-    }
-    override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
-        super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
+    public required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
     }
 }
 
