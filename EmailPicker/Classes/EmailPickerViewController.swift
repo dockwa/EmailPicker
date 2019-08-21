@@ -87,8 +87,20 @@ open class EmailPickerViewController: UIViewController {
         self.infoText = infoText
         
         navigationItem.title = "Select Contacts"
-        navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .cancel, target: self, action: #selector(self.cancel))
-        navigationItem.rightBarButtonItem = UIBarButtonItem(title: doneButtonTitle, style: .done, target: self, action: #selector(self.done))
+        navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .cancel, target: self, action: #selector(cancel))
+        navigationItem.rightBarButtonItem = UIBarButtonItem(title: doneButtonTitle, style: .done, target: self, action: #selector(done))
+        view.backgroundColor = .white
+        
+        if let text = infoText, !text.isEmpty {
+            view.addSubview(infoLabel)
+            infoLabel.text = text
+        }
+        
+        view.addSubview(tokenInputView)
+        view.addSubview(tableView)
+        view.insertSubview(loadingSpinner, aboveSubview: tableView)
+        
+        addLayoutConstraints()
     }
     required public init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
@@ -105,7 +117,6 @@ extension EmailPickerViewController {
     override open func viewDidLoad() {
         super.viewDidLoad()
         
-        setupView()
         loadContacts()
     }
     
@@ -381,22 +392,6 @@ extension EmailPickerViewController {
 // MARK: - Layout
 
 extension EmailPickerViewController {
-    
-    private func setupView() {
-        view.backgroundColor = .white
-
-        if let text = infoText , text.isEmpty == false {
-            view.addSubview(infoLabel)
-            infoLabel.text = text
-        }
-        
-        view.addSubview(tokenInputView)
-        view.addSubview(tableView)
-        view.insertSubview(loadingSpinner, aboveSubview: tableView)
-        
-        addLayoutConstraints()
-    }
-
     private func addLayoutConstraints() {
         
         func addConstraintsForInfoLabel() {
