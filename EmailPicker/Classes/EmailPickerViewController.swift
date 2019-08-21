@@ -70,6 +70,7 @@ open class EmailPickerViewController: UIViewController {
     private var selectedContacts: [CNContact] = []
     private let completion: Completion
     private let infoText: String?
+    private let showPermissionAlertAutomatically: Bool
     
     
     // MARK: - Init
@@ -79,13 +80,15 @@ open class EmailPickerViewController: UIViewController {
      
      - parameter infoText:   This is the text that will appear at the top of the EmailPicker. Use this to provide additional instructions or context for your users.
      - parameter doneButtonTitle: This is the title of the right bar button item, used to finish selecting emails.
+     - parameter showPermissionAlert: This is the title of the right bar button item, used to finish selecting emails.
      - parameter completion: The completion closure to handle the selected emails.
      
      - returns: Returns an EmailPicker.
      */
-    public init(infoText: String? = nil, doneButtonTitle: String = "Done", completion: @escaping Completion) {
+    public init(infoText: String? = nil, doneButtonTitle: String = "Done", showPermissionAlert: Bool = true, completion: @escaping Completion) {
         self.completion = completion
         self.infoText = infoText
+        self.showPermissionAlertAutomatically = showPermissionAlert
         super.init(nibName: nil, bundle: nil)
         
         navigationItem.title = "Select Contacts"
@@ -254,10 +257,23 @@ extension EmailPickerViewController: UITableViewDelegate {
     }
 }
 
-// MARK: - Contact Helpers
+// MARK: - Helpers
 
 extension EmailPickerViewController {
     
+    public func showPermissionAlert(error: NSError? = nil) {
+        let msg = "\(Bundle.name ?? "This app") does not have permission to show your contacts.\nTo allow \(Bundle.name ?? "this app") to show your contacts, tap Settings and make sure Contacts is switched on. (\(error?.localizedDescription ?? ""))."
+        
+        let alert = UIAlertController(title: "Error Loading Contacts", message: msg, preferredStyle: .alert)
+        let action = UIAlertAction(title: "Settings", style: .default, handler: { (action) in
+            UIApplication.shared.open(URL(string: UIApplication.openSettingsURLString)!, options: [:], completionHandler: nil)
+        })
+        let cancel = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
+        alert.addAction(action)
+        alert.addAction(cancel)
+        present(alert, animated: true, completion: nil)
+    }
+
     private func selectPreferedEmail(for contact: CNContact, fromView: UIView?, completion: ((CNContact) -> Void)?) {
         let mails = contact.emailAddresses
 
@@ -301,19 +317,6 @@ extension EmailPickerViewController {
         })
     }
     
-    private func showNoAccessAlert(withError: NSError? = nil) {
-        let msg = "This app might not have permission to show your contacts.\nTo allow this app to show your contacts, tap Settings and make sure Contacts is switched on. (\(withError?.localizedDescription ?? ""))."
-        
-        let alert = UIAlertController(title: "Error Loading Contacts", message: msg, preferredStyle: .alert)
-        let action = UIAlertAction(title: "Settings", style: .default, handler: { (action) in
-            UIApplication.shared.open(URL(string: UIApplication.openSettingsURLString)!, options: [:], completionHandler: nil)
-        })
-        let cancel = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
-        alert.addAction(action)
-        alert.addAction(cancel)
-        present(alert, animated: true, completion: nil)
-    }
-    
     private func loadContacts() {
         func showLoading() {
             tableView.isHidden = true
@@ -336,7 +339,9 @@ extension EmailPickerViewController {
         CNContactStore.fetchAllContacts(keysToFetch: keysToFetch, filter: { !$0.emailAddresses.isEmpty }) { (results, error) in
             finishLoading()
             if let error = error {
-                self.showNoAccessAlert(withError: error)
+                if self.showPermissionAlertAutomatically {
+                    self.showPermissionAlert(error: error)
+                }
             } else if let results = results {
                 self.contacts = results.sorted(by: { (lhs, rhs) -> Bool in
                     return lhs.givenName < rhs.givenName
@@ -536,5 +541,17 @@ private extension DispatchQueue {
                 })
             }
         }
+    }
+}
+
+private extension Bundle {
+    
+    static var name: String? {
+        if let display = Bundle.main.object(forInfoDictionaryKey: "CFBundleDisplayName") as? String {
+            return display
+        } else if let name = Bundle.main.object(forInfoDictionaryKey: "CFBundleName") as? String {
+            return name
+        }
+        return nil
     }
 }
