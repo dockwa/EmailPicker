@@ -25,7 +25,7 @@ open class EmailPickerViewController: UIViewController {
         case cancelled(EmailPickerViewController)
     }
     
-    public typealias CompletionHandler = (Result) -> Void
+    public typealias Completion = (Result) -> Void
 
     
     private lazy var tokenInputView: CLTokenInputView = {
@@ -66,7 +66,7 @@ open class EmailPickerViewController: UIViewController {
     private var contacts: [CNContact] = []
     private var filteredContacts: [CNContact] = []
     private var selectedContacts: [CNContact] = []
-    private var completion: CompletionHandler?
+    private var completion: Completion?
     private var infoText: String?
     
     
@@ -81,7 +81,7 @@ open class EmailPickerViewController: UIViewController {
      
      - returns: Returns an EmailPicker.
      */
-    public init(infoText: String? = nil, doneButtonTitle: String = "Done", completion: @escaping CompletionHandler) {
+    public init(infoText: String? = nil, doneButtonTitle: String = "Done", completion: @escaping Completion) {
         super.init(nibName: nil, bundle: nil)
         self.completion = completion
         self.infoText = infoText
