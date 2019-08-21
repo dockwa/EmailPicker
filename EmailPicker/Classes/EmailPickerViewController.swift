@@ -28,6 +28,8 @@ open class EmailPickerViewController: UIViewController {
     public typealias Completion = (Result) -> Void
 
     
+    // MARK: - Properties
+    
     private lazy var tokenInputView: CLTokenInputView = {
         let view = CLTokenInputView()
         view.delegate = self
@@ -133,11 +135,11 @@ extension EmailPickerViewController {
         tokenInputView.endEditing()
     }
 
-    @objc func cancel() {
+    @objc private func cancel() {
         completion?(.cancelled(self))
     }
     
-    @objc func done() {
+    @objc private func done() {
         tokenInputView.tokenizeTextfieldText()
         completion?(.selected(self, selectedContacts.compactMap { $0.userSelectedEmail }))
     }
@@ -209,7 +211,7 @@ extension EmailPickerViewController: CLTokenInputViewDelegate {
 
 extension EmailPickerViewController: UITableViewDataSource {
     
-    @objc(tableView:heightForRowAtIndexPath:) public func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+    public func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return EmailPickerCell.height
     }
     
