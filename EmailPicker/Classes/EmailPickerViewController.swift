@@ -223,8 +223,8 @@ extension EmailPickerViewController: UITableViewDataSource {
         let contact = filteredContacts[indexPath.row]
         let isSelected = selectedContacts.contains(contact)
 
-        cell.thumbnailImageView.image = contact.thumbnail
-        cell.label.text = "\(contact.givenName) \(contact.familyName)"
+        cell.thumbnailImageView.image = contact.thumbnailImage
+        cell.label.text = contact.displayString
         cell.accessoryType = isSelected ? .checkmark : .none
         return cell
     }
@@ -424,45 +424,6 @@ extension EmailPickerViewController {
         addConstraintsForTableView()
         addConstraintsForLoadingSpinner()
     }
-    
-}
-
-// MARK: - Extensions
-
-
-
-private extension String {
-    var isEmail: Bool {
-        return emailAddresses().count == 1
-    }
-    
-    func emailAddresses() -> [String] {
-        var addresses = [String]()
-        if let detector = try? NSDataDetector(types: NSTextCheckingResult.CheckingType.link.rawValue) {
-            let matches = detector.matches(in: self, options: [], range: NSMakeRange(0, self.count))
-            for match in matches {
-                if let matchURL = match.url,
-                    let matchURLComponents = URLComponents(url: matchURL, resolvingAgainstBaseURL: false),
-                    matchURLComponents.scheme == "mailto" {
-                    let address = matchURLComponents.path
-                    addresses.append(String(address))
-                }
-            }
-        }
-        return addresses
-    }
-}
-
-private var selectedEmailKey: UInt8 = 0
-private extension CNContact {
-    var userSelectedEmail: String? {
-        get {
-            return objc_getAssociatedObject(self, &selectedEmailKey) as? String
-        }
-        set(newValue) {
-            objc_setAssociatedObject(self, &selectedEmailKey, newValue, objc_AssociationPolicy.OBJC_ASSOCIATION_RETAIN)
-        }
-    }
 }
 
 // MARK: - Cell
@@ -487,8 +448,30 @@ class InsetLabel: UILabel {
     }
 }
 
+// MARK: - Extensions
 
+private var selectedEmailKey: UInt8 = 0
+private extension CNContact {
+    var userSelectedEmail: String? {
+        get { return objc_getAssociatedObject(self, &selectedEmailKey) as? String }
+        set { objc_setAssociatedObject(self, &selectedEmailKey, newValue, objc_AssociationPolicy.OBJC_ASSOCIATION_RETAIN) }
+    }
 
+    var displayString: String {
+        guard !givenName.isEmpty || !familyName.isEmpty else {
+            if let email = emailAddresses.first?.value {
+                return email as String
+            }
+            return ""
+        }
+        return "\(givenName) \(familyName)"
+    }
+    
+    var thumbnailImage: UIImage? {
+        guard let data = thumbnailImageData else { return nil }
+        return UIImage(data: data)
+    }
+}
 
 private extension CNContactStore {
     static func fetchAllContacts(keysToFetch: [CNKeyDescriptor], filter: ((CNContact) -> Bool)? = nil, completion: @escaping (([CNContact]?, NSError?) -> Void)) {
