@@ -19,16 +19,13 @@ Check out the example project for a usage example, like this:
 
 ```swift
 let textToShow = "To share your fun results with some friends, please type their emails or select their names from the list. Enjoy!"
-let picker = EmailPickerViewController(infoText: textToShow, doneButtonTitle: "Send", completion: {(result) in
-    switch result {
-    case .cancelled(let vc):
-        vc.dismiss(animated: true) {
-            self.contactsLabel.text = "Cancelled!"
-        }
-        
-    case .selected(let vc, let emails):
-        vc.dismiss(animated: true) {
+let picker = EmailPickerViewController(infoText: textToShow, doneButtonTitle: "Send", completion: {(result, vc) in
+    vc.dismiss(animated: true) {
+        switch result {
+        case .selected(let emails):
             self.contactsLabel.text = "Selected Emails: \(emails)"
+        case .cancelled:
+            self.contactsLabel.text = "Cancelled!"
         }
     }
 })
@@ -36,9 +33,12 @@ present(UINavigationController(rootViewController: picker), animated: true, comp
 ```
 
 ## Requirements
-Swift 4.0
+Swift 5.0
+iOS 10.3
 
 This is a Swift project and uses Swift specific features such as associated values on enums, so you cannot use this pod in Objective-C.
+
+If you need backwards compatibility to iOS 8.0, use version 1.5.0 of this library.  
 
 ## Installation
 
