@@ -334,36 +334,23 @@ extension EmailPickerViewController {
             tokenInputView.isUserInteractionEnabled = true
         }
         
-        showLoading()
-        
-        
-        
-        let contactStore = CNContactStore()
         let keysToFetch: [CNKeyDescriptor] = [
             CNContactGivenNameKey as CNKeyDescriptor,
             CNContactFamilyNameKey as CNKeyDescriptor,
             CNContactEmailAddressesKey as CNKeyDescriptor,
-            CNContactPhoneNumbersKey as CNKeyDescriptor,
-            CNContactImageDataAvailableKey as CNKeyDescriptor,
             CNContactThumbnailImageDataKey as CNKeyDescriptor]
-        
-        // Get all the containers
-        var allContainers: [CNContainer] = []
-        do {
-            allContainers = try contactStore.containers(matching: nil)
-        } catch {
-            print("Error fetching containers")
-        }
-        
-        var results: [CNContact] = []
-        // Iterate all containers and append their contacts to our results array
-        for container in allContainers {
-            let fetchPredicate = CNContact.predicateForContactsInContainer(withIdentifier: container.identifier)
-            do {
-                let containerResults = try contactStore.unifiedContacts(matching: fetchPredicate, keysToFetch: keysToFetch)
-                results += containerResults
-            } catch {
-                print("Error fetching results for container")
+
+        showLoading()
+        CNContactStore.fetchAllContacts(keysToFetch: keysToFetch, filter: { !$0.emailAddresses.isEmpty }) { (results, error) in
+            finishLoading()
+            if let error = error {
+                self.showNoAccessAlert(withError: error)
+            } else if let results = results {
+                self.contacts = results.sorted(by: { (lhs, rhs) -> Bool in
+                    return lhs.givenName < rhs.givenName
+                })
+                self.filteredContacts = self.contacts
+                self.tableView.reloadData()
             }
         }
     }
@@ -503,7 +490,43 @@ class InsetLabel: UILabel {
 
 
 
+private extension CNContactStore {
+    static func fetchAllContacts(keysToFetch: [CNKeyDescriptor], filter: ((CNContact) -> Bool)? = nil, completion: @escaping (([CNContact]?, NSError?) -> Void)) {
+        DispatchQueue.background(delay: 0, background: {
+            let contactStore = CNContactStore()
 
+            var allContainers: [CNContainer] = []
+            do {
+                allContainers = try contactStore.containers(matching: nil)
+            } catch {
+                DispatchQueue.main.async {
+                    completion(nil, error as NSError)
+                }
+            }
+            
+            var results: [CNContact] = []
+            for container in allContainers {
+                let fetchPredicate = CNContact.predicateForContactsInContainer(withIdentifier: container.identifier)
+                do {
+                    let containerResults = try contactStore.unifiedContacts(matching: fetchPredicate, keysToFetch: keysToFetch)
+                    results += containerResults
+                } catch {
+                    DispatchQueue.main.async {
+                        completion(nil, error as NSError)
+                    }
+                }
+            }
+            
+            if let filter = filter {
+                results = results.filter(filter)
+            }
+            
+            DispatchQueue.main.async {
+                completion(results, nil)
+            }
+        })
+    }
+}
 
 
 
