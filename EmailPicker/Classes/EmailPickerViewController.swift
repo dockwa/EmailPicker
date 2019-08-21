@@ -70,7 +70,7 @@ open class EmailPickerViewController: UIViewController {
     private var infoText: String?
     
     
-    //MARK: - Init
+    // MARK: - Init
     
     /**
      This is the prefered method to create a new EmailPicker. Use this method and present modally.
@@ -98,7 +98,7 @@ open class EmailPickerViewController: UIViewController {
     }
 }
 
-//MARK: - UIKit
+// MARK: - UIKit
 
 extension EmailPickerViewController {
     
@@ -133,7 +133,7 @@ extension EmailPickerViewController {
 }
 
 
-//MARK: - ClTokenInputView Delegate
+// MARK: - ClTokenInputView Delegate
 
 extension EmailPickerViewController: CLTokenInputViewDelegate {
     
@@ -220,7 +220,7 @@ extension EmailPickerViewController: UITableViewDataSource {
     }
 }
 
-//MARK: - TableView Delegate
+// MARK: - TableView Delegate
 
 extension EmailPickerViewController: UITableViewDelegate {
 
@@ -245,7 +245,7 @@ extension EmailPickerViewController: UITableViewDelegate {
     }
 }
 
-//MARK: - Contact Helpers
+// MARK: - Contact Helpers
 
 extension EmailPickerViewController {
     
@@ -378,7 +378,7 @@ extension EmailPickerViewController {
     }
 }
 
-//MARK: - Layout
+// MARK: - Layout
 
 extension EmailPickerViewController {
     
@@ -465,9 +465,9 @@ extension EmailPickerViewController {
     
 }
 
+// MARK: - Extensions
 
 
-//MARK: - Extensions
 
 private extension String {
     var isEmail: Bool {
@@ -503,7 +503,7 @@ private extension CNContact {
     }
 }
 
-//MARK: - Cell
+// MARK: - Cell
 
 class EmailPickerCell: UITableViewCell {
     @objc static let height: CGFloat = 60
@@ -516,7 +516,7 @@ class EmailPickerCell: UITableViewCell {
     @IBOutlet weak var label: UILabel!
 }
 
-//MARK: - UILabel Inset Subclass 
+// MARK: - UILabel Inset Subclass
 
 class InsetLabel: UILabel {
     override func drawText(in rect: CGRect) {
