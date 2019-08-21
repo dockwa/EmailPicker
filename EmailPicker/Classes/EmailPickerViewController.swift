@@ -259,19 +259,19 @@ extension EmailPickerViewController: UITableViewDelegate {
 
 extension EmailPickerViewController {
     
-    typealias SelectedEmailCompletion = (CNContact) -> Void
-   
-    private func selectPreferedEmail(for contact: CNContact, fromView: UIView?, completion: SelectedEmailCompletion?) {
-        guard let mails = contact.emails else { return }
-        
+    private func selectPreferedEmail(for contact: CNContact, fromView: UIView?, completion: ((CNContact) -> Void)?) {
+        let mails = contact.emailAddresses
+
         guard mails.count > 1 else {
-            contact.userSelectedEmail = mails.first?.address!
-            completion?(contact)
+            if let email = mails.first?.value {
+                contact.userSelectedEmail = email as String
+                completion?(contact)
+            }
             return
         }
-    
-        var actions = mails.map({ (email) -> UIAlertAction in
-            let action = UIAlertAction(title: email.address, style: .default, handler: { (action) -> Void in
+
+        var actions = mails.compactMap{$0.value as String}.map({ (email) -> UIAlertAction in
+            let action = UIAlertAction(title: email, style: .default, handler: { action in
                 contact.userSelectedEmail = action.title
                 completion?(contact)
             })
