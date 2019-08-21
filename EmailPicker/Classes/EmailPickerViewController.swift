@@ -279,19 +279,13 @@ extension EmailPickerViewController {
         })
         actions.append(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
         let alert = UIAlertController(title: "Choose Email", message: "Which email would you like to use?", preferredStyle: .actionSheet)
-        for act in actions {
-            alert.addAction(act)
-        }
-        
-        //show alert
+        actions.forEach { alert.addAction($0) } 
+
         if let fromView = fromView {
             alert.popoverPresentationController?.sourceView = fromView
             alert.popoverPresentationController?.permittedArrowDirections = [.up, .down]
         }
-        else {
-            alert.popoverPresentationController?.sourceView = self.view
-        }
-        
+
         present(alert, animated: true, completion: nil)
         alert.view.tintColor = view.tintColor
     }
@@ -313,7 +307,7 @@ extension EmailPickerViewController {
         let cancel = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
         alert.addAction(action)
         alert.addAction(cancel)
-        self.present(alert, animated: true, completion: nil)
+        present(alert, animated: true, completion: nil)
     }
     
     private func loadContacts() {
@@ -354,7 +348,6 @@ extension EmailPickerViewController {
 
 extension EmailPickerViewController {
     private func addLayoutConstraints() {
-        
         func addConstraintsForInfoLabel() {
             infoLabel.translatesAutoresizingMaskIntoConstraints = false
             let top = NSLayoutConstraint(item: infoLabel, attribute: .top, relatedBy: .equal, toItem: topLayoutGuide, attribute: .bottom, multiplier: 1, constant: 0)
@@ -379,8 +372,7 @@ extension EmailPickerViewController {
                 
                 tokenInputView.addConstraint(height)
                 view.addConstraints([top, left, right])
-            }
-            else {
+            } else {
                 let top = NSLayoutConstraint(item: tokenInputView, attribute: .top, relatedBy: .equal, toItem: topLayoutGuide, attribute: .bottom, multiplier: 1, constant: 0)
                 let left = NSLayoutConstraint(item: tokenInputView, attribute: .leading, relatedBy: .equal, toItem: view, attribute: .leading, multiplier: 1, constant: 0)
                 let right = NSLayoutConstraint(item: tokenInputView, attribute: .trailing, relatedBy: .equal, toItem: view, attribute: .trailing, multiplier: 1, constant: 0)
@@ -413,7 +405,6 @@ extension EmailPickerViewController {
         if let text = infoText , !text.isEmpty {
             addConstraintsForInfoLabel()
         }
-        
         addConstraintsForTokenInputView()
         addConstraintsForTableView()
         addConstraintsForLoadingSpinner()
