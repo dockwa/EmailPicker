@@ -291,10 +291,12 @@ extension EmailPickerViewController {
     }
     
     private func filterContacts(withSearchText text: String) {
-        let array = NSArray(array: self.contacts)
-        
-        let predicate = NSPredicate(format: "self.name.firstName contains[cd] %@ OR self.name.lastName contains[cd] %@", text, text)
-        self.filteredContacts = array.filtered(using: predicate) as! [CNContact]
+        let array = NSArray(array: contacts)
+        let predicate = NSPredicate(format: "self.givenName contains[cd] %@ OR self.familyName contains[cd] %@", text, text)
+        let filtered = array.filtered(using: predicate) as! [CNContact]
+        filteredContacts = filtered.sorted(by: { (lhs, rhs) -> Bool in
+            return lhs.givenName < rhs.givenName
+        })
     }
     
     private func showNoAccessAlert(withError: NSError? = nil) {
