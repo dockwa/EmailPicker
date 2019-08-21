@@ -123,7 +123,7 @@ extension EmailPickerViewController {
     override open func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         
-        if tokenInputView.isEditing == false {
+        if !tokenInputView.isEditing {
             tokenInputView.beginEditing()
         }
     }
@@ -387,7 +387,7 @@ extension EmailPickerViewController {
         func addConstraintsForTokenInputView() {
             tokenInputView.translatesAutoresizingMaskIntoConstraints = false
             
-            if let text = infoText , text.isEmpty == false {
+            if let text = infoText , !text.isEmpty {
                 let top = NSLayoutConstraint(item: tokenInputView, attribute: .top, relatedBy: .equal, toItem: infoLabel, attribute: .bottom, multiplier: 1, constant: 0)
                 let left = NSLayoutConstraint(item: tokenInputView, attribute: .leading, relatedBy: .equal, toItem: view, attribute: .leading, multiplier: 1, constant: 0)
                 let right = NSLayoutConstraint(item: tokenInputView, attribute: .trailing, relatedBy: .equal, toItem: view, attribute: .trailing, multiplier: 1, constant: 0)
@@ -429,7 +429,7 @@ extension EmailPickerViewController {
             view.addConstraints([alignVertical, alignHorizontal])
         }
         
-        if let text = infoText , text.isEmpty == false {
+        if let text = infoText , !text.isEmpty {
             addConstraintsForInfoLabel()
         }
         
