@@ -36,7 +36,6 @@ open class EmailPickerViewController: UIViewController {
         view.placeholderText = "Enter an email address"
         view.drawBottomBorder = true
         view.tokenizationCharacters = [" ", ","]
-        view.backgroundColor = .white
         return view
     }()
     private lazy var tableView: UITableView = {
@@ -61,13 +60,20 @@ open class EmailPickerViewController: UIViewController {
         label.minimumScaleFactor = 0.5
         label.textAlignment = .center
         label.font = UIFont.boldSystemFont(ofSize: 18)
+        
         return label
     }()
     private var tokenHeightConstraint: NSLayoutConstraint?
     
     private var contacts: [CNContact] = []
     private var filteredContacts: [CNContact] = []
-    private var selectedContacts: [CNContact] = []
+    private var selectedContacts: [CNContact] = [] {
+        didSet {
+            if #available(iOS 13.0, *) {
+                isModalInPresentation = !selectedContacts.isEmpty
+            }
+        }
+    }
     private let completion: Completion
     private let infoText: String?
     private let showPermissionAlertAutomatically: Bool
@@ -94,7 +100,11 @@ open class EmailPickerViewController: UIViewController {
         navigationItem.title = "Select Contacts"
         navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .cancel, target: self, action: #selector(cancel))
         navigationItem.rightBarButtonItem = UIBarButtonItem(title: doneButtonTitle, style: .done, target: self, action: #selector(done))
-        view.backgroundColor = .white
+        if #available(iOS 13.0, *) {
+            view.backgroundColor = UIColor.systemBackground
+        } else {
+            view.backgroundColor = UIColor.white
+        }
         
         if let text = infoText, !text.isEmpty {
             view.addSubview(infoLabel)
@@ -127,6 +137,11 @@ extension EmailPickerViewController {
         
         if !tokenInputView.isEditing {
             tokenInputView.beginEditing()
+        }
+        
+        if #available(iOS 13.0, *) {
+            view.backgroundColor = UIColor.systemBackground
+            infoLabel.textColor = UIColor.label
         }
     }
     
@@ -228,6 +243,9 @@ extension EmailPickerViewController: UITableViewDataSource {
         cell.thumbnailImageView.image = contact.thumbnailImage
         cell.label.text = contact.displayString
         cell.accessoryType = isSelected ? .checkmark : .none
+        if #available(iOS 13.0, *) {
+            cell.label.textColor = UIColor.label
+        }
         return cell
     }
 }

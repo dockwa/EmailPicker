@@ -33,4 +33,13 @@ class ViewController: UIViewController {
         picker.view.tintColor = .red
         present(UINavigationController(rootViewController: picker), animated: true, completion: nil)
     }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        
+        if #available(iOS 13.0, *) {
+            view.backgroundColor = UIColor.systemBackground
+            contactsLabel.textColor = UIColor.label
+        }
+    }
 }
