@@ -27,7 +27,6 @@ open class EmailPickerViewController: UIViewController {
     
     public typealias Completion = (Result, EmailPickerViewController) -> Void
 
-    
     // MARK: - Properties
     
     private lazy var tokenInputView: CLTokenInputView = {
@@ -60,11 +59,9 @@ open class EmailPickerViewController: UIViewController {
         label.minimumScaleFactor = 0.5
         label.textAlignment = .center
         label.font = UIFont.boldSystemFont(ofSize: 18)
-        
         return label
     }()
     private var tokenHeightConstraint: NSLayoutConstraint?
-    
     private var contacts: [CNContact] = []
     private var filteredContacts: [CNContact] = []
     private var selectedContacts: [CNContact] = [] {
@@ -96,7 +93,6 @@ open class EmailPickerViewController: UIViewController {
         self.infoText = infoText
         self.showPermissionAlertAutomatically = showPermissionAlert
         super.init(nibName: nil, bundle: nil)
-        
         navigationItem.title = "Select Contacts"
         navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .cancel, target: self, action: #selector(cancel))
         navigationItem.rightBarButtonItem = UIBarButtonItem(title: doneButtonTitle, style: .done, target: self, action: #selector(done))
@@ -119,15 +115,10 @@ open class EmailPickerViewController: UIViewController {
         
         addLayoutConstraints()
     }
-    public required init?(coder aDecoder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-}
+    public required init?(coder aDecoder: NSCoder) { fatalError("init(coder:) has not been implemented") }
 
-// MARK: - UIKit
+    // MARK: - UIKit
 
-extension EmailPickerViewController {
-    
     override open func viewDidLoad() {
         super.viewDidLoad()
         
@@ -175,7 +166,6 @@ extension EmailPickerViewController: CLTokenInputViewDelegate {
         } else {
             filterContacts(withSearchText: text)
         }
-        
         tableView.reloadData()
     }
     
@@ -198,30 +188,24 @@ extension EmailPickerViewController: CLTokenInputViewDelegate {
         if filteredContacts.count > 0 {
             guard let contact = filteredContacts.first else { return nil }
             selectPreferedEmail(for: contact, fromView: view, completion: nil)
-        } else { //lets create a token
+        } else {
             if text.isEmail {
                 let contact = CNContact()
                 contact.userSelectedEmail = text
-                
                 let token = CLToken(displayText: contact.userSelectedEmail!, context: contact)
                 return token
             }
         }
-        
         return nil
     }
-    
-    public func tokenInputViewDidEndEditing(_ view: CLTokenInputView) {
-        
-    }
-    
-    public func tokenInputViewDidBeginEditing(_ view: CLTokenInputView) {
-        
-    }
-    
+
     public func tokenInputView(_ view: CLTokenInputView, didChangeHeightTo height: CGFloat) {
         tokenHeightConstraint?.constant = height
     }
+
+    public func tokenInputViewDidEndEditing(_ view: CLTokenInputView) { }
+    
+    public func tokenInputViewDidBeginEditing(_ view: CLTokenInputView) { }
 }
 
 // MARK: - TableView DataSource
@@ -238,10 +222,8 @@ extension EmailPickerViewController: UITableViewDataSource {
     
     public func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "EmailPickerCell") as! EmailPickerCell
-        
         let contact = filteredContacts[indexPath.row]
         let isSelected = selectedContacts.contains(contact)
-
         cell.thumbnailImageView.image = contact.thumbnailImage
         cell.label.text = contact.displayString
         cell.accessoryType = isSelected ? .checkmark : .none
@@ -259,13 +241,11 @@ extension EmailPickerViewController: UITableViewDelegate {
     public func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
         let contact = filteredContacts[indexPath.row]
-        
         if selectedContacts.contains(contact) { //we already have it, lets deselect it
             if let idx = selectedContacts.firstIndex(of: contact) {
                 selectedContacts.remove(at: idx)
             }
             tableView.reloadData()
-            
             guard let token = CLToken(contact: contact) else { return }
             tokenInputView.remove(token)
         } else { //we don't have it, lets select it
@@ -283,7 +263,6 @@ extension EmailPickerViewController {
     
     public func showPermissionAlert(error: NSError? = nil) {
         let msg = "\(Bundle.name ?? "This app") does not have permission to show your contacts.\nTo allow \(Bundle.name ?? "this app") to show your contacts, tap Settings and make sure Contacts is switched on. (\(error?.localizedDescription ?? ""))."
-        
         let alert = UIAlertController(title: "Error Loading Contacts", message: msg, preferredStyle: .alert)
         let action = UIAlertAction(title: "Settings", style: .default, handler: { (action) in
             UIApplication.shared.open(URL(string: UIApplication.openSettingsURLString)!, options: [:], completionHandler: nil)
@@ -296,7 +275,6 @@ extension EmailPickerViewController {
 
     private func selectPreferedEmail(for contact: CNContact, fromView: UIView?, completion: ((CNContact) -> Void)?) {
         let mails = contact.emailAddresses
-
         guard mails.count > 1 else {
             if let email = mails.first?.value {
                 contact.userSelectedEmail = email as String
@@ -323,7 +301,6 @@ extension EmailPickerViewController {
         } else {
             alert.popoverPresentationController?.sourceView = view
         }
-
         present(alert, animated: true, completion: nil)
         alert.view.tintColor = view.tintColor
     }
@@ -489,9 +466,8 @@ private extension CNContact {
 
 private extension CNContactStore {
     static func fetchAllContacts(keysToFetch: [CNKeyDescriptor], filter: ((CNContact) -> Bool)? = nil, completion: @escaping (([CNContact]?, NSError?) -> Void)) {
-        DispatchQueue.background(delay: 0, background: {
+        DispatchQueue.global(qos: .utility).async {
             let contactStore = CNContactStore()
-
             var allContainers: [CNContainer] = []
             do {
                 allContainers = try contactStore.containers(matching: nil)
@@ -500,7 +476,6 @@ private extension CNContactStore {
                     completion(nil, error as NSError)
                 }
             }
-            
             var results: [CNContact] = []
             for container in allContainers {
                 let fetchPredicate = CNContact.predicateForContactsInContainer(withIdentifier: container.identifier)
@@ -513,15 +488,13 @@ private extension CNContactStore {
                     }
                 }
             }
-            
             if let filter = filter {
                 results = results.filter(filter)
             }
-            
             DispatchQueue.main.async {
                 completion(results, nil)
             }
-        })
+        }
     }
 }
 
@@ -534,7 +507,7 @@ private extension CLToken {
 
 private extension String {
     var isEmail: Bool {
-        return emailAddresses().count == 1
+        emailAddresses().count == 1
     }
     
     func emailAddresses() -> [String] {
@@ -545,27 +518,12 @@ private extension String {
                   let matchURLComponents = URLComponents(url: matchURL, resolvingAgainstBaseURL: false),
                   matchURLComponents.scheme == "mailto"
             else { return nil }
-            
             return matchURLComponents.path
         }
     }
 }
 
-private extension DispatchQueue {
-    static func background(delay: Double = 0.0, background: (()->Void)? = nil, completion: (() -> Void)? = nil) {
-        DispatchQueue.global(qos: .background).async {
-            background?()
-            if let completion = completion {
-                DispatchQueue.main.asyncAfter(deadline: .now() + delay, execute: {
-                    completion()
-                })
-            }
-        }
-    }
-}
-
 private extension Bundle {
-    
     static var name: String? {
         if let display = Bundle.main.object(forInfoDictionaryKey: "CFBundleDisplayName") as? String {
             return display
