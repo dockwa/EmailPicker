@@ -101,9 +101,11 @@ open class EmailPickerViewController: UIViewController {
         navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .cancel, target: self, action: #selector(cancel))
         navigationItem.rightBarButtonItem = UIBarButtonItem(title: doneButtonTitle, style: .done, target: self, action: #selector(done))
         if #available(iOS 13.0, *) {
-            view.backgroundColor = UIColor.systemBackground
+            view.backgroundColor = .systemBackground
+            tokenInputView.backgroundColor = .systemBackground
         } else {
-            view.backgroundColor = UIColor.white
+            view.backgroundColor = .white
+            tokenInputView.backgroundColor = .white
         }
         
         if let text = infoText, !text.isEmpty {
