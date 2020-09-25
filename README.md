@@ -10,7 +10,7 @@
 EmailPicker is a simple Swift viewcontroller to easily select emails from a user's contacts and/or enter them manually. Great for sharing content or inviting users.
 
 ## Example
-![Sample](https://github.com/dockwa/EmailPicker/blob/master/Sample.gif)
+![Sample](https://github.com/dockwa/EmailPicker/blob/main/Sample.gif)
 
 To test out EmailPicker, just run `pod try EmailPicker` from your terminal, or clone the repo, and run `pod install` from the Example directory. 
 
