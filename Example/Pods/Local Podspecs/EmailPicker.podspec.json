@@ -1,6 +1,6 @@
 {
   "name": "EmailPicker",
-  "version": "2.0.0",
+  "version": "2.1.2",
   "summary": "A viewcontroller to select emails, written in Swift.",
   "description": "A viewcontroller that enables users to select emails from a list of their contacts, or type them in manually. 100% Swift.",
   "homepage": "https://github.com/dockwa/EmailPicker",
@@ -10,12 +10,12 @@
   },
   "source": {
     "git": "https://github.com/dockwa/EmailPicker.git",
-    "tag": "2.0.0"
+    "tag": "2.1.2"
   },
   "social_media_url": "https://twitter.com/commodoreftp",
   "swift_versions": "5.0",
   "platforms": {
-    "ios": "10.3"
+    "ios": "11.4"
   },
   "source_files": "EmailPicker/Classes/**/*",
   "dependencies": {
