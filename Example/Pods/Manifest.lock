@@ -1,6 +1,6 @@
 PODS:
   - CLTokenInputView (2.3.0)
-  - EmailPicker (2.0.0):
+  - EmailPicker (2.1.2):
     - CLTokenInputView
 
 DEPENDENCIES:
@@ -8,7 +8,7 @@ DEPENDENCIES:
   - EmailPicker (from `../`)
 
 SPEC REPOS:
-  https://github.com/cocoapods/specs.git:
+  trunk:
     - CLTokenInputView
 
 EXTERNAL SOURCES:
@@ -17,8 +17,8 @@ EXTERNAL SOURCES:
 
 SPEC CHECKSUMS:
   CLTokenInputView: 9dc1ffb7c9d2d81787e69a63c75bd97b0b2d1e76
-  EmailPicker: 594818681bd66fe9fa5f46516e06d9e161a75b7f
+  EmailPicker: 76639a9de075155ccce81c2ae01e32595a16c37b
 
-PODFILE CHECKSUM: 40b34840d5ad7b63b6e9214ce46f3aa8cdbc4000
+PODFILE CHECKSUM: 08d9f2dfbe649c61cb8e353e2b2b519c4cae4717
 
-COCOAPODS: 1.7.1
+COCOAPODS: 1.10.0.rc.1

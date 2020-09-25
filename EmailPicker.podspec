@@ -8,25 +8,20 @@
 
 Pod::Spec.new do |s|
   s.name             = 'EmailPicker'
-  s.version          = '2.1.2'
+  s.version          = '3.0.0'
   s.summary          = 'A viewcontroller to select emails, written in Swift.'
-
   s.description      = <<-DESC
 
     A viewcontroller that enables users to select emails from a list of their contacts, or type them in manually. 100% Swift.
 
     DESC
-
   s.homepage         = 'https://github.com/dockwa/EmailPicker'
   s.license          = 'MIT'
   s.author           = { 'Christian Hatch' => 'christianhatch@gmail.com' }
   s.source           = { :git => 'https://github.com/dockwa/EmailPicker.git', :tag => s.version.to_s }
   s.social_media_url = 'https://twitter.com/commodoreftp'
-
   s.swift_version = '5.0'
-  s.ios.deployment_target = '10.3'
-
+  s.ios.deployment_target = '11.4'
   s.source_files = 'EmailPicker/Classes/**/*'
-
   s.dependency 'CLTokenInputView'
 end
