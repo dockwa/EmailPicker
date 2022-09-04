@@ -10,7 +10,7 @@
 EmailPicker is a simple Swift viewcontroller to easily select emails from a user's contacts and/or enter them manually. Great for sharing content or inviting users.
 
 ## Example
-![Sample](https://github.com/dockwa/EmailPicker/blob/main/Sample.gif)
+![Sample](https://github.com/dockwa/EmailPicker/blob/main/Example/Sample.gif)
 
 To test out EmailPicker, just run `pod try EmailPicker` from your terminal, or clone the repo, and run `pod install` from the Example directory. 
 
@@ -41,6 +41,20 @@ This is a Swift project and uses Swift specific features such as associated valu
 If you need backwards compatibility to iOS 8.0, use version 1.5.0 of this library.  
 
 ## Installation
+
+### Swift Package Manager
+
+The [Swift Package Manager](https://swift.org/package-manager/) is a tool for automating the distribution of Swift code and is integrated into the `swift` compiler.
+
+Once you have your Swift package set up, adding SimpleImageSlider as a dependency is as easy as adding it to the `dependencies` value of your `Package.swift`.
+
+```swift
+dependencies: [
+    .package(url: "https://github.com/dockwa/EmailPicker", .upToNextMajor(from: "4.0.0"))
+]
+```
+
+### CocoaPods
 
 EmailPicker is available through [CocoaPods](http://cocoapods.org). To install
 it, simply add the following line to your Podfile:
