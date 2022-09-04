@@ -1,0 +1,14 @@
+{
+  "pins" : [
+    {
+      "identity" : "cltokeninputview",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/dockwa/CLTokenInputView.git",
+      "state" : {
+        "revision" : "6b6752e8a3d5104886dd973a938a88d96bc55280",
+        "version" : "2.5.0"
+      }
+    }
+  ],
+  "version" : 2
+}
