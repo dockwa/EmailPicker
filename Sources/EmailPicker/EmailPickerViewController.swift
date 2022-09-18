@@ -39,7 +39,7 @@ open class EmailPickerViewController: UIViewController {
     }()
     private lazy var tableView: UITableView = {
         let table = UITableView()
-        table.register(UINib(nibName: "EmailPickerCell", bundle: Bundle(for: type(of: self))), forCellReuseIdentifier: "EmailPickerCell")
+        table.register(EmailPickerCell.self, forCellReuseIdentifier: EmailPickerCell.reuseIdentifier)
         table.delegate = self
         table.dataSource = self
         table.rowHeight = EmailPickerCell.height
@@ -421,13 +421,86 @@ extension EmailPickerViewController {
 
 class EmailPickerCell: UITableViewCell {
     @objc static let height: CGFloat = 60
-    
-    @IBOutlet weak var thumbnailImageView: UIImageView! {
-        didSet {
-            thumbnailImageView.layer.cornerRadius = 20
-        }
+    static var reuseIdentifier: String {
+        String(describing: self)
     }
-    @IBOutlet weak var label: UILabel!
+    
+    lazy var thumbnailImageView: UIImageView = {
+        let imageView = UIImageView()
+        imageView.layer.cornerRadius = 50
+        return imageView
+    }()
+    lazy var label: UILabel = {
+        let label = UILabel()
+        label.font = .systemFont(ofSize: 18)
+        return label
+    }()
+
+    override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
+        super.init(style: style, reuseIdentifier: reuseIdentifier)
+
+        contentView.addSubview(thumbnailImageView)
+        contentView.addSubview(label)
+        imageViewConstraints()
+        labelConstraints()
+    }
+
+    required init?(coder: NSCoder) {
+        super.init(coder: coder)
+    }
+
+    private func imageViewConstraints() {
+        thumbnailImageView.translatesAutoresizingMaskIntoConstraints = false
+        let top = NSLayoutConstraint(item: thumbnailImageView,
+                                     attribute: .top,
+                                     relatedBy: .equal,
+                                     toItem: contentView,
+                                     attribute: .top,
+                                     multiplier: 1,
+                                     constant: 10)
+        let leading = NSLayoutConstraint(item: thumbnailImageView,
+                                         attribute: .leading,
+                                         relatedBy: .equal,
+                                         toItem: contentView,
+                                         attribute: .leading,
+                                         multiplier: 1,
+                                         constant: 10)
+        let centerY = NSLayoutConstraint(item: thumbnailImageView,
+                                         attribute: .centerY,
+                                         relatedBy: .equal,
+                                         toItem: contentView,
+                                         attribute: .centerY,
+                                         multiplier: 1,
+                                         constant: 0)
+        let width = NSLayoutConstraint(item: thumbnailImageView,
+                                        attribute: .width,
+                                        relatedBy: .equal,
+                                        toItem: nil,
+                                        attribute: .notAnAttribute,
+                                        multiplier: 1,
+                                        constant: 40)
+        thumbnailImageView.addConstraint(width)
+        contentView.addConstraints([top, leading, centerY])
+    }
+
+    private func labelConstraints() {
+        label.translatesAutoresizingMaskIntoConstraints = false
+        let leading = NSLayoutConstraint(item: label,
+                                         attribute: .leading,
+                                         relatedBy: .equal,
+                                         toItem: thumbnailImageView,
+                                         attribute: .trailing,
+                                         multiplier: 1,
+                                         constant: 10)
+        let centerY = NSLayoutConstraint(item: label,
+                                         attribute: .centerY,
+                                         relatedBy: .equal,
+                                         toItem: contentView,
+                                         attribute: .centerY,
+                                         multiplier: 1,
+                                         constant: 0)
+        contentView.addConstraints([leading, centerY])
+    }
 }
 
 // MARK: - UILabel Inset Subclass

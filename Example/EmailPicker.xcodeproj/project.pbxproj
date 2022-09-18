@@ -45,7 +45,7 @@
 		792EE554A769FE236D5B574E /* README.md */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = net.daringfireball.markdown; name = README.md; path = ../README.md; sourceTree = "<group>"; };
 		7F1C8C9BF4F47C46E88C2B4E /* Pods-EmailPicker_Tests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-EmailPicker_Tests.release.xcconfig"; path = "Pods/Target Support Files/Pods-EmailPicker_Tests/Pods-EmailPicker_Tests.release.xcconfig"; sourceTree = "<group>"; };
 		9F674F9FC601C55FE37E98F4 /* Pods-EmailPicker_Example.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-EmailPicker_Example.debug.xcconfig"; path = "Pods/Target Support Files/Pods-EmailPicker_Example/Pods-EmailPicker_Example.debug.xcconfig"; sourceTree = "<group>"; };
-		AA62E912231A5372D7D93F1E /* EmailPicker.podspec */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = EmailPicker.podspec; path = ../EmailPicker.podspec; sourceTree = "<group>"; };
+		AA62E912231A5372D7D93F1E /* EmailPicker.podspec */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = EmailPicker.podspec; path = ../EmailPicker.podspec; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
 		F112133B4DFFC4115550FA66 /* Pods-EmailPicker_Tests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-EmailPicker_Tests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-EmailPicker_Tests/Pods-EmailPicker_Tests.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
