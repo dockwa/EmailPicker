@@ -427,7 +427,8 @@ class EmailPickerCell: UITableViewCell {
     
     lazy var thumbnailImageView: UIImageView = {
         let imageView = UIImageView()
-        imageView.layer.cornerRadius = 50
+        imageView.layer.cornerRadius = 20
+        imageView.layer.masksToBounds = true
         return imageView
     }()
     lazy var label: UILabel = {
