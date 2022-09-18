@@ -39,7 +39,7 @@ open class EmailPickerViewController: UIViewController {
     }()
     private lazy var tableView: UITableView = {
         let table = UITableView()
-        table.register(UINib(nibName: "EmailPickerCell", bundle: Bundle(for: type(of: self))), forCellReuseIdentifier: "EmailPickerCell")
+        table.register(EmailPickerCell.self, forCellReuseIdentifier: EmailPickerCell.reuseIdentifier)
         table.delegate = self
         table.dataSource = self
         table.rowHeight = EmailPickerCell.height
@@ -415,19 +415,6 @@ extension EmailPickerViewController {
         addConstraintsForTableView()
         addConstraintsForLoadingSpinner()
     }
-}
-
-// MARK: - Cell
-
-class EmailPickerCell: UITableViewCell {
-    @objc static let height: CGFloat = 60
-    
-    @IBOutlet weak var thumbnailImageView: UIImageView! {
-        didSet {
-            thumbnailImageView.layer.cornerRadius = 20
-        }
-    }
-    @IBOutlet weak var label: UILabel!
 }
 
 // MARK: - UILabel Inset Subclass

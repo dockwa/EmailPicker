@@ -14,6 +14,7 @@
 		2CDF4650410439C8FC8319F9F886DC4A /* CLTokenInputView-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = 6E2DBB5692E5AE382B0B0C2ED08F541E /* CLTokenInputView-dummy.m */; };
 		2DDF2BFC20E029775DE233A4646B39D6 /* CLBackspaceDetectingTextField.m in Sources */ = {isa = PBXBuildFile; fileRef = 8622D3BB1807808817EAA36405F7FB9B /* CLBackspaceDetectingTextField.m */; };
 		3BE12D47159D85C9D7DFBDDF9C545707 /* CLTokenInputView.m in Sources */ = {isa = PBXBuildFile; fileRef = F5F1D8D4B3CC23C0D4AF375F70F7E1A7 /* CLTokenInputView.m */; };
+		45E0436628D7D9110002ADB2 /* EmailPickerCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45E0436528D7D9110002ADB2 /* EmailPickerCell.swift */; };
 		597F36649605C471D5E62F6BAD9E3EAB /* Pods-EmailPicker_Tests-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = 8A077EF1E0F5249F89A0174B93E94285 /* Pods-EmailPicker_Tests-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		61E310F256F348A658E7FE5B0E431DF0 /* CLBackspaceDetectingTextField.h in Headers */ = {isa = PBXBuildFile; fileRef = 22B86A6081CBE4AED3F9BDF343791946 /* CLBackspaceDetectingTextField.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		6DA5BA396C96AC4F640AFD1A13595C33 /* Pods-EmailPicker_Example-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = CB542B468923BD12F8CDAF4713D69EB1 /* Pods-EmailPicker_Example-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -26,7 +27,6 @@
 		D74A9CFAD7BB3CCB0CB6210C384A32BC /* Pods-EmailPicker_Example-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = F71F32E316700DDA206AF0483A267828 /* Pods-EmailPicker_Example-dummy.m */; };
 		DA49E9705DA31387E6F3B2EFD8EE37B9 /* CLTokenInputView.h in Headers */ = {isa = PBXBuildFile; fileRef = 72D6B14CC4BE5E69150EFDE2A89AE6BD /* CLTokenInputView.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		F36AB00014DAEB440D3A735E32ABF909 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 73010CC983E3809BECEE5348DA1BB8C6 /* Foundation.framework */; };
-		F6A0DB143D3828673254B660E35A7898 /* EmailPickerCell.xib in Sources */ = {isa = PBXBuildFile; fileRef = 04F16FA2229B8EE4B287C5E24546D5CC /* EmailPickerCell.xib */; };
 		FB0A69B932F145DFB361B92AB91EF352 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 73010CC983E3809BECEE5348DA1BB8C6 /* Foundation.framework */; };
 		FEBBE56EA2AE243AD22C29424A0E8D19 /* CLTokenView.m in Sources */ = {isa = PBXBuildFile; fileRef = C06E7DF1CF9A001A6CD873AE2B8C93C0 /* CLTokenView.m */; };
 /* End PBXBuildFile section */
@@ -64,13 +64,13 @@
 
 /* Begin PBXFileReference section */
 		031BA1B450B66CD6B650321FADA83413 /* Pods-EmailPicker_Example.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-EmailPicker_Example.debug.xcconfig"; sourceTree = "<group>"; };
-		04F16FA2229B8EE4B287C5E24546D5CC /* EmailPickerCell.xib */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = file.xib; name = EmailPickerCell.xib; path = Sources/EmailPicker/EmailPickerCell.xib; sourceTree = "<group>"; };
 		0FA3276AFCE399D1D17FE001D55BEAE4 /* Pods-EmailPicker_Example-frameworks.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "Pods-EmailPicker_Example-frameworks.sh"; sourceTree = "<group>"; };
 		18561EDA2523377DAA7BB81242E80DC0 /* Pods-EmailPicker_Example.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.module; path = "Pods-EmailPicker_Example.modulemap"; sourceTree = "<group>"; };
 		22B86A6081CBE4AED3F9BDF343791946 /* CLBackspaceDetectingTextField.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = CLBackspaceDetectingTextField.h; path = CLTokenInputView/CLTokenInputView/CLBackspaceDetectingTextField.h; sourceTree = "<group>"; };
 		2DFB5677219312FA37BB223EAA7F0DAF /* Pods-EmailPicker_Tests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-EmailPicker_Tests.release.xcconfig"; sourceTree = "<group>"; };
 		2F4AAFCFB379EB3879B9BE26CE06E380 /* EmailPicker-Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "EmailPicker-Info.plist"; sourceTree = "<group>"; };
 		3D65FA8D616A86E68333B5AB68481EF9 /* EmailPicker.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = EmailPicker.debug.xcconfig; sourceTree = "<group>"; };
+		45E0436528D7D9110002ADB2 /* EmailPickerCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmailPickerCell.swift; sourceTree = "<group>"; };
 		47837245494DBEF6047DB5F0105E08E2 /* LICENSE */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; path = LICENSE; sourceTree = "<group>"; };
 		4A3A992A0726551941FF33BB4925227C /* EmailPicker-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "EmailPicker-dummy.m"; sourceTree = "<group>"; };
 		51441AB616C147702BD0B65A8FF74A37 /* CLTokenInputView.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = CLTokenInputView.release.xcconfig; sourceTree = "<group>"; };
@@ -267,8 +267,8 @@
 		B70B097EDA0C8AFB673CBFE159790AFB /* EmailPicker */ = {
 			isa = PBXGroup;
 			children = (
-				04F16FA2229B8EE4B287C5E24546D5CC /* EmailPickerCell.xib */,
 				BE8DF275E763F65DEF602F5F274A7C34 /* EmailPickerViewController.swift */,
+				45E0436528D7D9110002ADB2 /* EmailPickerCell.swift */,
 				32420FA809A04A5A52172168649F75EA /* Pod */,
 				8B7DBC7578DC297492FC500A92D1A07A /* Support Files */,
 			);
@@ -520,8 +520,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				45E0436628D7D9110002ADB2 /* EmailPickerCell.swift in Sources */,
 				8064B535FEEEB09C09F87AA7E1D81964 /* EmailPicker-dummy.m in Sources */,
-				F6A0DB143D3828673254B660E35A7898 /* EmailPickerCell.xib in Sources */,
 				C4145462218F4CD50381BB492CBE6ECF /* EmailPickerViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
