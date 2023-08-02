@@ -31,6 +31,7 @@
 		055B83CA298B3F27CB33120C /* LICENSE */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = LICENSE; path = ../LICENSE; sourceTree = "<group>"; };
 		1E8AD2D1FEAD57577D0D5072 /* Pods_EmailPicker_Tests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_EmailPicker_Tests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		1EF868E2B5C4A6B04D525E9A /* Pods_EmailPicker_Example.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_EmailPicker_Example.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		4588105D2A7AD8E000F7BE02 /* Package.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = Package.swift; path = ../Package.swift; sourceTree = "<group>"; };
 		5F7F78D6A60CBABA2C55B735 /* Pods-EmailPicker_Example.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-EmailPicker_Example.release.xcconfig"; path = "Pods/Target Support Files/Pods-EmailPicker_Example/Pods-EmailPicker_Example.release.xcconfig"; sourceTree = "<group>"; };
 		607FACD01AFB9204008FA782 /* EmailPicker_Example.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = EmailPicker_Example.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		607FACD41AFB9204008FA782 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -81,6 +82,7 @@
 		607FACC71AFB9204008FA782 = {
 			isa = PBXGroup;
 			children = (
+				4588105D2A7AD8E000F7BE02 /* Package.swift */,
 				607FACF51AFB993E008FA782 /* Podspec Metadata */,
 				607FACD21AFB9204008FA782 /* Example for EmailPicker */,
 				607FACE81AFB9204008FA782 /* Tests */,
