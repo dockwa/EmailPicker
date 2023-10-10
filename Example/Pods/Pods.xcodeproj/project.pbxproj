@@ -69,7 +69,7 @@
 		09DC4D8EE006B75954C64753FBAA1D44 /* EmailPicker.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = EmailPicker.release.xcconfig; sourceTree = "<group>"; };
 		0FA3276AFCE399D1D17FE001D55BEAE4 /* Pods-EmailPicker_Example-frameworks.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "Pods-EmailPicker_Example-frameworks.sh"; sourceTree = "<group>"; };
 		13D62D4DC7C772C26C836F6A4FDB3389 /* EmailPicker-Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "EmailPicker-Info.plist"; sourceTree = "<group>"; };
-		17762339AFA326EAA17E68E749D6E743 /* README.md */ = {isa = PBXFileReference; includeInIndex = 1; path = README.md; sourceTree = "<group>"; };
+		17762339AFA326EAA17E68E749D6E743 /* README.md */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		18561EDA2523377DAA7BB81242E80DC0 /* Pods-EmailPicker_Example.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.module; path = "Pods-EmailPicker_Example.modulemap"; sourceTree = "<group>"; };
 		22B86A6081CBE4AED3F9BDF343791946 /* CLBackspaceDetectingTextField.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = CLBackspaceDetectingTextField.h; path = CLTokenInputView/CLTokenInputView/CLBackspaceDetectingTextField.h; sourceTree = "<group>"; };
 		28AC40E508CFBF5EF5326629FEAB0B72 /* EmailPicker-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "EmailPicker-dummy.m"; sourceTree = "<group>"; };
@@ -80,7 +80,7 @@
 		551C7DC4CC2B2B7B190AF114DB015931 /* CLTokenView.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = CLTokenView.h; path = CLTokenInputView/CLTokenInputView/CLTokenView.h; sourceTree = "<group>"; };
 		5BD27FD037A7D4BC48908B4A31FB6573 /* CLTokenInputView-prefix.pch */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "CLTokenInputView-prefix.pch"; sourceTree = "<group>"; };
 		5F8EFA2673ED307B071C41500498A3D5 /* EmailPicker.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = EmailPicker.debug.xcconfig; sourceTree = "<group>"; };
-		6437278CEEA2BAC7C41CB0FD5287A45D /* EmailPicker.podspec */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; includeInIndex = 1; indentWidth = 2; lastKnownFileType = text; path = EmailPicker.podspec; sourceTree = "<group>"; tabWidth = 2; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
+		6437278CEEA2BAC7C41CB0FD5287A45D /* EmailPicker.podspec */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; includeInIndex = 1; indentWidth = 2; path = EmailPicker.podspec; sourceTree = "<group>"; tabWidth = 2; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
 		67D82FCE7479BB415857A22878D905F3 /* Pods-EmailPicker_Tests-acknowledgements.markdown */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; path = "Pods-EmailPicker_Tests-acknowledgements.markdown"; sourceTree = "<group>"; };
 		6E2DBB5692E5AE382B0B0C2ED08F541E /* CLTokenInputView-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "CLTokenInputView-dummy.m"; sourceTree = "<group>"; };
 		72D6B14CC4BE5E69150EFDE2A89AE6BD /* CLTokenInputView.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = CLTokenInputView.h; path = CLTokenInputView/CLTokenInputView/CLTokenInputView.h; sourceTree = "<group>"; };
@@ -90,13 +90,13 @@
 		8663A39D3CE9CC8E5FD18E737CF21A16 /* Pods-EmailPicker_Example-acknowledgements.markdown */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; path = "Pods-EmailPicker_Example-acknowledgements.markdown"; sourceTree = "<group>"; };
 		8A077EF1E0F5249F89A0174B93E94285 /* Pods-EmailPicker_Tests-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "Pods-EmailPicker_Tests-umbrella.h"; sourceTree = "<group>"; };
 		9083B610FDC8BDF744FF8A27AA27B7FB /* CLTokenInputView-Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "CLTokenInputView-Info.plist"; sourceTree = "<group>"; };
-		90C94BE9C42074AC63597451379E09D9 /* Pods-EmailPicker_Example */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = "Pods-EmailPicker_Example"; path = Pods_EmailPicker_Example.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		9D940727FF8FB9C785EB98E56350EF41 /* Podfile */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; includeInIndex = 1; indentWidth = 2; lastKnownFileType = text; name = Podfile; path = ../Podfile; sourceTree = SOURCE_ROOT; tabWidth = 2; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
+		90C94BE9C42074AC63597451379E09D9 /* Pods_EmailPicker_Example.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_EmailPicker_Example.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		9D940727FF8FB9C785EB98E56350EF41 /* Podfile */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; includeInIndex = 1; indentWidth = 2; name = Podfile; path = ../Podfile; sourceTree = SOURCE_ROOT; tabWidth = 2; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
 		9DE1E697FA9F24A5BBD32BAC263157CB /* Pods-EmailPicker_Example-Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-EmailPicker_Example-Info.plist"; sourceTree = "<group>"; };
 		A1F6800E3139FB898493587D04EBC850 /* CLTokenInputView-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "CLTokenInputView-umbrella.h"; sourceTree = "<group>"; };
 		A323BA0B541C09C4FBFF37B8BD0C56F5 /* CLTokenInputView */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = CLTokenInputView; path = CLTokenInputView.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		A354E2039D8106773CA9A600DBCB2989 /* Pods-EmailPicker_Tests.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.module; path = "Pods-EmailPicker_Tests.modulemap"; sourceTree = "<group>"; };
-		A8432469D4FC49E9E86E72F99B81B7DA /* LICENSE */ = {isa = PBXFileReference; includeInIndex = 1; path = LICENSE; sourceTree = "<group>"; };
+		A8432469D4FC49E9E86E72F99B81B7DA /* LICENSE */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; path = LICENSE; sourceTree = "<group>"; };
 		B28D2EC56684D48EE7716C15E94CEA52 /* Pods-EmailPicker_Tests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-EmailPicker_Tests.debug.xcconfig"; sourceTree = "<group>"; };
 		B97C8D1E04F9041ECD29E2AB0CF99AB9 /* Pods-EmailPicker_Tests-acknowledgements.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-EmailPicker_Tests-acknowledgements.plist"; sourceTree = "<group>"; };
 		BB3D72C439A1E05D6B3015011B29D1F9 /* Pods-EmailPicker_Example.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-EmailPicker_Example.release.xcconfig"; sourceTree = "<group>"; };
@@ -309,10 +309,10 @@
 		DBCB49907BC176C984503CB7D8159DFF /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				A323BA0B541C09C4FBFF37B8BD0C56F5 /* CLTokenInputView */,
+				A323BA0B541C09C4FBFF37B8BD0C56F5 /* CLTokenInputView.framework */,
 				C5E3A048755BC8596FDAE61F4494A271 /* EmailPicker */,
-				90C94BE9C42074AC63597451379E09D9 /* Pods-EmailPicker_Example */,
-				F5D62E000A7E16829AC30AC42807F4ED /* Pods-EmailPicker_Tests */,
+				90C94BE9C42074AC63597451379E09D9 /* Pods_EmailPicker_Example.framework */,
+				F5D62E000A7E16829AC30AC42807F4ED /* Pods_EmailPicker_Tests.framework */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -581,7 +581,7 @@
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				INFOPLIST_FILE = "Target Support Files/Pods-EmailPicker_Example/Pods-EmailPicker_Example-Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 11.4;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.4;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -618,7 +618,7 @@
 				GCC_PREFIX_HEADER = "Target Support Files/CLTokenInputView/CLTokenInputView-prefix.pch";
 				INFOPLIST_FILE = "Target Support Files/CLTokenInputView/CLTokenInputView-Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.4;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -688,7 +688,7 @@
 				GCC_PREFIX_HEADER = "Target Support Files/CLTokenInputView/CLTokenInputView-prefix.pch";
 				INFOPLIST_FILE = "Target Support Files/CLTokenInputView/CLTokenInputView-Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.4;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -789,7 +789,7 @@
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				INFOPLIST_FILE = "Target Support Files/Pods-EmailPicker_Tests/Pods-EmailPicker_Tests-Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 11.4;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.4;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -888,7 +888,7 @@
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				INFOPLIST_FILE = "Target Support Files/Pods-EmailPicker_Tests/Pods-EmailPicker_Tests-Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 11.4;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.4;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -926,7 +926,7 @@
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				INFOPLIST_FILE = "Target Support Files/Pods-EmailPicker_Example/Pods-EmailPicker_Example-Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 11.4;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.4;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
