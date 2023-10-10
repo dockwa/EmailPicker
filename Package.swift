@@ -14,7 +14,7 @@ let package = Package(
             targets: ["EmailPicker"]),
     ],
     dependencies: [
-        .package(url: "https://github.com/dockwa/CLTokenInputView.git", from: "3.0.3")
+        .package(url: "https://github.com/dockwa/CLTokenInputView.git", from: "3.0.4")
     ],
     targets: [
         .target(
