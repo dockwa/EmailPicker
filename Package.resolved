@@ -5,8 +5,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/dockwa/CLTokenInputView.git",
       "state" : {
-        "branch" : "spm-fix",
-        "revision" : "20c5997400b295a5167bf277478a3e89b1855986"
+        "revision" : "ab47b96686d21528e6c71a3f59f6434e2010aa55",
+        "version" : "3.0.0"
       }
     }
   ],
